@@ -6,8 +6,14 @@
 <body>
     <h1>PDF Merger</h1>
     <form action="/merge" method="post" enctype="multipart/form-data">
-        <label>Select PDF files to merge:</label>
-        <input type="file" name="pdfs" multiple required>
+        <label for="pdf1">Select PDF 1:</label>
+        <input type="file" name="pdf1" id="pdf1" accept="application/pdf" required>
+        <br>
+        <label for="pdf2">Select PDF 2:</label>
+        <input type="file" name="pdf2" id="pdf2" accept="application/pdf" required>
+        <br>
+        <label for="pdf3">Select PDF 3 (optional):</label>
+        <input type="file" name="pdf3" id="pdf3" accept="application/pdf">
         <br>
         <button type="submit">Merge PDFs</button>
     </form>
