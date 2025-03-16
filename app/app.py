@@ -16,14 +16,10 @@ def index():
 
 @app.route("/merge", methods=["POST"])
 def merge_pdfs():
-    files = []
-    for key in ["pdf1", "pdf2", "pdf3"]:  # フォームのファイルフィールドの名前
-        file = request.files.get(key)
-        if file and file.filename:  # 有効なファイルが選択された場合のみ追加
-            files.append(file)
+    files = request.files.getlist("pdfs")
 
-    if len(files) < 2:  # 2つ以上のファイルが必要
-        return "少なくとも2つのPDFをアップロードしてください", 400
+    if not files:
+        return "少なくとも1つのPDFをアップロードしてください", 400
 
     merger = PdfMerger()
     output_file = os.path.join(UPLOAD_FOLDER, "merged.pdf")
@@ -33,7 +29,7 @@ def merge_pdfs():
             merger.append(file)
         merger.write(output_file)
         merger.close()
-        return send_file(output_file, as_attachment=True)
+        return send_file(output_file, as_attachment=True, download_name="merged.pdf")
     except Exception as e:
         return f"PDFマージ中にエラーが発生しました: {str(e)}", 500
     finally:
