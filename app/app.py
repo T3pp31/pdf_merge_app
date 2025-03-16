@@ -16,8 +16,13 @@ def index():
 
 @app.route("/merge", methods=["POST"])
 def merge_pdfs():
-    files = request.files.getlist("pdfs")
-    if not files or len(files) < 2:
+    files = []
+    for key in ["pdf1", "pdf2", "pdf3"]:  # フォームのファイルフィールドの名前
+        file = request.files.get(key)
+        if file and file.filename:  # 有効なファイルが選択された場合のみ追加
+            files.append(file)
+
+    if len(files) < 2:  # 2つ以上のファイルが必要
         return "少なくとも2つのPDFをアップロードしてください", 400
 
     merger = PdfMerger()
