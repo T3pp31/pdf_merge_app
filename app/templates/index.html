@@ -6,6 +6,7 @@
 <body>
     <h1>PDF Merger</h1>
     <form action="/merge" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">  <!-- ここにCSRFトークンを追加 -->
         <label for="pdfs">Select PDFs:</label>
         <input type="file" name="pdfs" id="pdfs" accept="application/pdf" multiple required>
         <br>
