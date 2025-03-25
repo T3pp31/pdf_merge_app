@@ -1,8 +1,10 @@
 import os
 
 from flask import Flask, render_template, request, send_file
+from flask_wtf.csrf import CSRFProtect
 from PyPDF2 import PdfMerger
 
+csrf = CSRFProtect(app)
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
