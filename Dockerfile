@@ -11,4 +11,4 @@ COPY app/ /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # アプリケーションを起動
-CMD ["python", "app.py"]
+CMD ["python", "app.py", "--reload"]
