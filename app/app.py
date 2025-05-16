@@ -1,7 +1,7 @@
 import os
 import random
 from flask import Flask, render_template, request, send_file
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from PyPDF2 import PdfMerger
 
 # make csrf key
@@ -17,15 +17,15 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/")
 def index():
-    return render_template("index.html", csrf_token=csrf._get_csrf_token())
+    # 公式の generate_csrf を使ってトークンを生成・セッションに保存し、テンプレートに渡す
+    return render_template("index.html", csrf_token=generate_csrf())
 
 
 @app.route("/merge", methods=["POST"])
 def merge_pdfs():
     files = request.files.getlist("pdfs")
 
-    if not csrf.validate_csrf_token(request.form.get('csrf_token')):
-        return "CSRFトークンが不正です", 403
+    # CSRFProtect が自動で検証するため、手動検証のコードを削除
 
     if not files:
         return "少なくとも1つのPDFをアップロードしてください", 400
