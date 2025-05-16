@@ -2,27 +2,174 @@
 <html>
 <head>
     <title>PDF Merger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #fff;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px #0008;
+        }
+        form {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 32px 40px 24px 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 #0006;
+            margin: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 320px;
+        }
+        .file-label {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background: #232526;
+            border: 2px dashed #00c6ff;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .file-label:hover {
+            border-color: #0072ff;
+        }
+        .file-label-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #00c6ff;
+            margin-bottom: 8px;
+        }
+        input[type="file"] {
+            margin-bottom: 0;
+            color: #fff;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        .file-selected {
+            margin-top: 6px;
+            font-size: 0.98rem;
+            color: #ffd700;
+            min-height: 1.2em;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0072ff44;
+            transition: background 0.2s, transform 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .ads {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .ads a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #0072ff33;
+            padding: 8px 12px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .ads a:hover {
+            box-shadow: 0 4px 24px #00c6ff66;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .ads img {
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            form {
+                min-width: 0;
+                width: 95vw;
+                padding: 18px 4vw 14px 4vw;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 900px) {
+            .ads {
+                flex-direction: column;
+                gap: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>PDF Merger</h1>
     <form action="/merge" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">  <!-- ここにCSRFトークンを追加 -->
-        <label for="pdfs">Select PDFs:</label>
-        <input type="file" name="pdfs" id="pdfs" accept="application/pdf" multiple required>
+        <label for="pdfs" class="file-label">
+            <span class="file-label-title">PDFファイルを選択（複数選択可）</span>
+            <input type="file" name="pdfs" id="pdfs" accept="application/pdf" multiple required>
+        </label>
+        <div class="file-selected" id="file-selected">ファイルが選択されていません</div>
         <br>
         <button type="submit">Merge PDFs</button>
     </form>
-    <a href="https://px.a8.net/svt/ejp?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" rel="nofollow">
-        <img border="0" width="234" height="60" alt="" src="https://www22.a8.net/svt/bgt?aid=180705697115&wid=002&eno=01&mid=s00000000002006094000&mc=1"></a>
-        <img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" alt="">
-
-    <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+ASS3KQ+4EKC+631SX" rel="nofollow">
-        <img border="0" width="600" height="100" alt="" src="https://www22.a8.net/svt/bgt?aid=250321508653&wid=002&eno=01&mid=s00000020550001022000&mc=1"></a>
-        <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4519B8+ASS3KQ+4EKC+631SX" alt="">
-    <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BJKLSQ+14CS+6C9LD" rel="nofollow">
-        <img border="0" width="120" height="60" alt="" src="https://www24.a8.net/svt/bgt?aid=250321508698&wid=002&eno=01&mid=s00000005230001065000&mc=1"></a>
-        <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4519B8+BJKLSQ+14CS+6C9LD" alt="">
-    <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BK61EI+5LNQ+5YJRM" rel="nofollow">メルカリ</a>
-    <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4519B8+BK61EI+5LNQ+5YJRM" alt="">
+    <div class="ads">
+        <a href="https://px.a8.net/svt/ejp?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" rel="nofollow">
+            <img border="0" width="234" height="60" alt="" src="https://www22.a8.net/svt/bgt?aid=180705697115&wid=002&eno=01&mid=s00000000002006094000&mc=1"></a>
+            <img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" alt="">
+        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+ASS3KQ+4EKC+631SX" rel="nofollow">
+            <img border="0" width="600" height="100" alt="" src="https://www22.a8.net/svt/bgt?aid=250321508653&wid=002&eno=01&mid=s00000020550001022000&mc=1"></a>
+            <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4519B8+ASS3KQ+4EKC+631SX" alt="">
+        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BJKLSQ+14CS+6C9LD" rel="nofollow">
+            <img border="0" width="120" height="60" alt="" src="https://www24.a8.net/svt/bgt?aid=250321508698&wid=002&eno=01&mid=s00000005230001065000&mc=1"></a>
+            <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4519B8+BJKLSQ+14CS+6C9LD" alt="">
+        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BK61EI+5LNQ+5YJRM" rel="nofollow" style="color:#00c6ff;font-weight:bold;font-size:1.1rem;">メルカリ</a>
+        <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4519B8+BK61EI+5LNQ+5YJRM" alt="">
+    </div>
+    <script>
+        // ファイル選択時に選択ファイル名を表示
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('pdfs');
+            const fileSelected = document.getElementById('file-selected');
+            input.addEventListener('change', function() {
+                if (input.files.length === 0) {
+                    fileSelected.textContent = 'ファイルが選択されていません';
+                } else {
+                    const names = Array.from(input.files).map(f => f.name).join(', ');
+                    fileSelected.textContent = names;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
