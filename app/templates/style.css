@@ -1,3 +1,4 @@
+/* 全体レイアウト -------------------------------------------------- */
 body {
     background: linear-gradient(135deg, #232526 0%, #414345 100%);
     color: #fff;
@@ -9,6 +10,7 @@ body {
     align-items: center;
     justify-content: flex-start;
 }
+
 h1 {
     margin-top: 40px;
     font-size: 2.8rem;
@@ -16,6 +18,8 @@ h1 {
     font-weight: 700;
     text-shadow: 0 2px 8px #0008;
 }
+
+/* フォームブロック ------------------------------------------------ */
 form {
     background: rgba(30, 30, 30, 0.95);
     padding: 32px 40px 24px 40px;
@@ -27,19 +31,46 @@ form {
     align-items: center;
     min-width: 320px;
 }
-label {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-}
-input[type="file"] {
-    margin-bottom: 18px;
-    color: #fff;
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     background: #232526;
-    border: 1px solid #444;
-    border-radius: 6px;
-    padding: 8px;
+    border: 2px dashed #00c6ff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
 }
+
+.file-label:hover {
+    border-color: #0072ff;
+}
+
+.file-label-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #00c6ff;
+    margin-bottom: 8px;
+}
+
+input[type="file"] {
+    margin-bottom: 0;
+    color: #fff;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.file-selected {
+    margin-top: 6px;
+    font-size: 0.98rem;
+    color: #ffd700;
+    min-height: 1.2em;
+}
+
 button[type="submit"] {
     background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
     color: #fff;
@@ -53,26 +84,67 @@ button[type="submit"] {
     box-shadow: 0 2px 8px #0072ff44;
     transition: background 0.2s, transform 0.2s;
 }
+
 button[type="submit"]:hover {
     background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
     transform: translateY(-2px) scale(1.04);
 }
+
+/* 広告エリア ------------------------------------------------------ */
 .ads {
     margin-top: 32px;
     display: flex;
-    flex-direction: column;
-    gap: 18px;
+    flex-direction: row;
+    gap: 24px;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
-.ads img, .ads a {
+
+.ads a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #0072ff33;
+    padding: 8px 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.ads a:hover {
+    box-shadow: 0 4px 24px #00c6ff66;
+    transform: translateY(-2px) scale(1.04);
+}
+
+.ads img {
     border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
+
+.ads-link-text {
+    color: #00c6ff;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* レスポンシブ対応 ------------------------------------------------ */
+@media (max-width: 900px) {
+    .ads {
+        flex-direction: column;
+        gap: 18px;
+    }
+}
+
 @media (max-width: 600px) {
     form {
         min-width: 0;
         width: 95vw;
         padding: 18px 4vw 14px 4vw;
     }
+
     h1 {
         font-size: 2rem;
     }
