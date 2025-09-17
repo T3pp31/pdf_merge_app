@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDFマージサービス - Azure AD 認証</title>
+  <script src="https://alcdn.msauth.net/browser/2.35.0/js/msal-browser.min.js"></script>
+  <style>
+    :root { --wine: #bb2642; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      visibility: hidden;
+    }
+
+    .auth-loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+    }
+
+    .auth-loading h2 {
+      margin-bottom: 16px;
+      font-size: 1.6rem;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-container {
+      width: 95%;
+      max-width: 960px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+
+    .header {
+      background: var(--wine);
+      color: white;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .home-button {
+      position: absolute;
+      left: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 8px 18px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .home-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .home-button:active {
+      transform: scale(0.97);
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .content {
+      padding: 30px;
+      background: #f8f9fa;
+      display: grid;
+      gap: 24px;
+    }
+
+    .intro-card {
+      background: white;
+      padding: 20px 24px;
+      border-radius: 16px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      display: grid;
+      gap: 12px;
+    }
+
+    .intro-card h2 {
+      font-size: 1.2rem;
+      color: #2d3a61;
+    }
+
+    .intro-card ul {
+      margin-left: 1.2rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .upload-area {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      display: grid;
+      gap: 18px;
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--wine);
+      border-radius: 16px;
+      padding: 40px 20px;
+      text-align: center;
+      background: #fff5f7;
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .drop-zone.dragover {
+      border-color: #a32038;
+      background: #ffe9ed;
+      transform: translateY(-2px);
+    }
+
+    .drop-zone p {
+      color: #7a2535;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .drop-zone span {
+      display: inline-block;
+      background: white;
+      border: 2px solid var(--wine);
+      border-radius: 999px;
+      padding: 8px 18px;
+      color: var(--wine);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .drop-zone:hover span {
+      background: var(--wine);
+      color: white;
+    }
+
+    .file-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #fff5f6;
+      border-radius: 12px;
+      border: 1px solid rgba(187, 38, 66, 0.25);
+    }
+
+    .file-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .file-name {
+      font-weight: 600;
+      color: #2d3a3d;
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-size {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .remove-button {
+      background: transparent;
+      border: none;
+      color: #d6455d;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .remove-button:hover {
+      transform: scale(1.1);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .secondary-button {
+      border: 2px solid var(--wine);
+      background: white;
+      color: var(--wine);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .secondary-button:hover {
+      background: var(--wine);
+      color: white;
+    }
+
+    .primary-button {
+      border: none;
+      background: var(--wine);
+      color: white;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(187, 38, 66, 0.35);
+    }
+
+    .primary-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .status-area {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      display: grid;
+      gap: 14px;
+    }
+
+    .status-message {
+      color: #495057;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .status-message.error {
+      color: #c0392b;
+    }
+
+    .status-message.success {
+      color: #1e7e34;
+    }
+
+    .download-link {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .download-link a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .download-link a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(16, 185, 129, 0.35);
+    }
+
+    .download-meta {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 16px 0;
+        align-items: flex-start;
+      }
+
+      .app-container {
+        width: 95%;
+        border-radius: 18px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 1.4rem;
+      }
+
+      .home-button {
+        left: 16px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .drop-zone {
+        padding: 28px 16px;
+      }
+
+      .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .file-name {
+        max-width: 100%;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-loading" id="authLoading">
+    <h2>Azure ADで認証中...</h2>
+    <div class="spinner"></div>
+  </div>
+
+  <div class="app-container" id="appContainer">
+    <div class="header">
+      <button class="home-button" onclick="navigateToHome()">← 戻る</button>
+      <h1>PDFマージサービス</h1>
+    </div>
+
+    <div class="content">
+      <section class="intro-card">
+        <h2>使い方</h2>
+        <ul>
+          <li>マージしたいPDFファイルを1つ以上選択してください</li>
+          <li>ファイルは最大5つまでアップロードできます</li>
+          <li>処理完了後に結合されたPDFをダウンロードできます</li>
+          <li>データは保存していません</li>
+        </ul>
+      </section>
+
+      <section class="upload-area">
+        <div class="drop-zone" id="dropZone">
+          <p>PDFファイルをここにドラッグ＆ドロップ</p>
+          <span>またはファイルを選択</span>
+        </div>
+        <input type="file" id="fileInput" class="hidden-input" accept="application/pdf" multiple />
+
+        <div class="file-list" id="fileList" aria-live="polite"></div>
+
+        <div class="controls">
+          <button class="secondary-button" id="chooseButton">ファイルを選択</button>
+          <button class="secondary-button" id="clearButton">リストをクリア</button>
+          <button class="primary-button" id="mergeButton" disabled>マージを実行</button>
+        </div>
+      </section>
+
+      <section class="status-area">
+        <p class="status-message" id="statusMessage">ファイルを選択して「マージを実行」をクリックしてください。</p>
+        <div class="download-link" id="downloadSection">
+          <a id="downloadLink" href="#" download="merged.pdf">📄 マージ結果をダウンロード</a>
+          <span class="download-meta" id="downloadMeta"></span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const API_ENDPOINT = "https://w1gtgd7eda.execute-api.ap-northeast-1.amazonaws.com/api1/pdfmerge";
+
+    const msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: "8629ce52-7bc1-43bc-bd1e-81526f06647b",
+        authority: "https://login.microsoftonline.com/a0ff080f-ce15-4520-ba64-fd5aa4b0141a",
+        redirectUri: window.location.href
+      }
+    });
+
+    let account = null;
+    let tokenRefreshInterval = null;
+    let currentToken = null;
+    let selectedFiles = [];
+    let currentDownloadUrl = null;
+
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    const chooseButton = document.getElementById("chooseButton");
+    const clearButton = document.getElementById("clearButton");
+    const mergeButton = document.getElementById("mergeButton");
+    const fileList = document.getElementById("fileList");
+    const statusMessage = document.getElementById("statusMessage");
+    const downloadSection = document.getElementById("downloadSection");
+    const downloadLink = document.getElementById("downloadLink");
+    const downloadMeta = document.getElementById("downloadMeta");
+
+    function updateStatus(message, type = "info") {
+      statusMessage.textContent = message;
+      statusMessage.classList.remove("error", "success");
+      if (type === "error") {
+        statusMessage.classList.add("error");
+      } else if (type === "success") {
+        statusMessage.classList.add("success");
+      }
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = "";
+
+      if (selectedFiles.length === 0) {
+        mergeButton.disabled = true;
+        return;
+      }
+
+      selectedFiles.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "file-item";
+
+        const meta = document.createElement("div");
+        meta.className = "file-meta";
+
+        const name = document.createElement("span");
+        name.className = "file-name";
+        name.textContent = file.name;
+
+        const size = document.createElement("span");
+        size.className = "file-size";
+        size.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+
+        meta.appendChild(name);
+        meta.appendChild(size);
+
+        const remove = document.createElement("button");
+        remove.className = "remove-button";
+        remove.type = "button";
+        remove.textContent = "✕";
+        remove.setAttribute("aria-label", `${file.name} を削除`);
+        remove.addEventListener("click", () => {
+          selectedFiles.splice(index, 1);
+          renderFileList();
+          updateStatus("ファイルを削除しました。");
+        });
+
+        item.appendChild(meta);
+        item.appendChild(remove);
+        fileList.appendChild(item);
+      });
+
+      mergeButton.disabled = selectedFiles.length === 0;
+    }
+
+    function addFiles(files) {
+      const newFiles = Array.from(files).filter(file => file.type === "application/pdf");
+      if (newFiles.length !== files.length) {
+        updateStatus("PDFファイル以外が含まれていたため除外しました。", "error");
+      }
+
+      const combined = [...selectedFiles, ...newFiles];
+      if (combined.length > 5) {
+        updateStatus("一度にアップロードできるPDFは最大5件です。", "error");
+        selectedFiles = combined.slice(0, 5);
+      } else {
+        selectedFiles = combined;
+      }
+
+      if (selectedFiles.length > 0) {
+        updateStatus(`${selectedFiles.length} 件のPDFを選択しました。`);
+      } else {
+        updateStatus("ファイルを選択して「マージを実行」をクリックしてください。");
+      }
+
+      renderFileList();
+    }
+
+    dropZone.addEventListener("click", () => fileInput.click());
+
+    dropZone.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", (event) => {
+      event.preventDefault();
+      dropZone.classList.remove("dragover");
+      addFiles(event.dataTransfer.files);
+    });
+
+    fileInput.addEventListener("change", (event) => {
+      addFiles(event.target.files);
+      fileInput.value = "";
+    });
+
+    chooseButton.addEventListener("click", () => fileInput.click());
+
+    clearButton.addEventListener("click", () => {
+      selectedFiles = [];
+      renderFileList();
+      if (currentDownloadUrl) {
+        URL.revokeObjectURL(currentDownloadUrl);
+        currentDownloadUrl = null;
+      }
+      downloadSection.style.display = "none";
+      updateStatus("ファイルリストをクリアしました。");
+    });
+
+    async function getValidToken(forceRefresh = false) {
+      try {
+        if (!account) {
+          const result = await msalInstance.loginPopup({ scopes: ["openid", "profile"] });
+          account = result.account;
+        }
+
+        if (!forceRefresh && currentToken) {
+          return currentToken;
+        }
+
+        const tokenResult = await msalInstance.acquireTokenSilent({
+          scopes: ["openid", "profile"],
+          account,
+          forceRefresh: true
+        });
+
+        currentToken = tokenResult.idToken;
+        return currentToken;
+      } catch (error) {
+        console.warn("トークンのサイレント取得に失敗しました", error);
+        const tokenResult = await msalInstance.acquireTokenPopup({
+          scopes: ["openid", "profile"],
+          account
+        });
+        currentToken = tokenResult.idToken;
+        return currentToken;
+      }
+    }
+
+    function startTokenRefreshTimer() {
+      if (tokenRefreshInterval) {
+        clearInterval(tokenRefreshInterval);
+      }
+
+      tokenRefreshInterval = setInterval(async () => {
+        try {
+          await getValidToken(true);
+        } catch (error) {
+          console.error("トークン更新に失敗しました", error);
+          updateStatus("認証トークンの更新に失敗しました。ページを再読み込みしてください。", "error");
+        }
+      }, 45 * 60 * 1000);
+    }
+
+    // File -> Base64 (without data: prefix)
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target.result || '';
+          const base64 = String(result).includes(',') ? String(result).split(',')[1] : String(result);
+          resolve(base64);
+        };
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function mergePdfs(retryCount = 0) {
+      if (selectedFiles.length === 0) {
+        updateStatus("マージするPDFを選択してください。", "error");
+        return;
+      }
+
+      mergeButton.disabled = true;
+      mergeButton.textContent = "マージ処理中...";
+      updateStatus("PDFをアップロードしてマージしています。しばらくお待ちください...");
+      downloadSection.style.display = "none";
+
+      try {
+        const token = await getValidToken(retryCount > 0);
+
+        // Align request shape to other pages (JSON with base64 files)
+        const filesForAPI = await Promise.all(
+          selectedFiles.map(async (file) => ({
+            type: 'document',
+            media_type: file.type || 'application/pdf',
+            data: await readFileAsBase64(file),
+            name: file.name
+          }))
+        );
+
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ files: filesForAPI })
+        });
+
+        if (response.status === 401 && retryCount === 0) {
+          console.log("認証エラーが発生したためトークンを更新して再試行します。");
+          return await mergePdfs(retryCount + 1);
+        }
+
+        if (!response.ok) {
+          let errorDetail = "PDFマージに失敗しました";
+          try {
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+              const data = await response.json();
+              errorDetail = data.error || data.message || errorDetail;
+            } else {
+              errorDetail = await response.text();
+            }
+          } catch (err) {
+            console.warn("エラー詳細の解析に失敗", err);
+          }
+          throw new Error(errorDetail);
+        }
+
+        const contentType = response.headers.get("content-type") || "";
+        let mergedBlob;
+
+        if (contentType.includes("application/pdf")) {
+          mergedBlob = await response.blob();
+        } else {
+          const text = await response.text();
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (jsonError) {
+            throw new Error("レスポンスの解析に失敗しました: " + text.slice(0, 200));
+          }
+
+          if (data && (data.body || data.isBase64Encoded)) {
+            const base64String = data.body || "";
+            const binary = atob(base64String);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+              bytes[i] = binary.charCodeAt(i);
+            }
+            mergedBlob = new Blob([bytes], { type: "application/pdf" });
+          } else {
+            throw new Error(data.error || data.message || "PDFマージ結果の解析に失敗しました");
+          }
+        }
+
+        if (currentDownloadUrl) {
+          URL.revokeObjectURL(currentDownloadUrl);
+        }
+        currentDownloadUrl = URL.createObjectURL(mergedBlob);
+
+        downloadLink.href = currentDownloadUrl;
+        downloadLink.download = generateDownloadName();
+        downloadMeta.textContent = `サイズ: ${(mergedBlob.size / 1024).toFixed(1)} KB`;
+        downloadSection.style.display = "flex";
+
+        updateStatus("PDFのマージが完了しました。ダウンロードリンクから取得できます。", "success");
+      } catch (error) {
+        console.error("PDFマージエラー", error);
+        updateStatus(`PDFマージ中にエラーが発生しました: ${error.message}`, "error");
+      } finally {
+        mergeButton.disabled = selectedFiles.length === 0;
+        mergeButton.textContent = "マージを実行";
+      }
+    }
+
+    function generateDownloadName() {
+      const timestamp = new Date().toISOString().replace(/[-:T]/g, "").split(".")[0];
+      return `merged_${timestamp}.pdf`;
+    }
+
+    mergeButton.addEventListener("click", () => mergePdfs());
+
+    window.addEventListener("load", async () => {
+      try {
+        const response = await msalInstance.handleRedirectPromise();
+        if (response && response.account) {
+          account = response.account;
+          showApp();
+        } else {
+          const accounts = msalInstance.getAllAccounts();
+          if (accounts.length > 0) {
+            account = accounts[0];
+            showApp();
+          } else {
+            await msalInstance.loginRedirect({ scopes: ["openid", "profile"] });
+          }
+        }
+      } catch (error) {
+        console.error("認証エラー", error);
+        updateStatus("Azure AD 認証に失敗しました: " + error.message, "error");
+        showApp();
+      }
+    });
+
+    function showApp() {
+      document.getElementById("authLoading").style.display = "none";
+      document.getElementById("appContainer").style.display = "flex";
+      document.body.style.visibility = "visible";
+      startTokenRefreshTimer();
+    }
+
+    function navigateToHome() {
+      window.location.href = "./index.html";
+    }
+  </script>
+</body>
+</html>
