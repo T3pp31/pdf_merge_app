@@ -1,33 +1,15 @@
 # AWS Lambda 上で PDF マージ API を提供するモジュール
 import base64
-import json
 import binascii
+import io
+import json
 import os
 import tempfile
-import time
 from email.parser import BytesParser
 from email.policy import default
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
-import requests
-
-from jose import jwk, jwt
-from jose.exceptions import JWTError
 from PyPDF2 import PdfMerger
-import io
-
-
-AZURE_TENANT_ID = os.environ.get("AZURE_TENANT_ID", "a0ff080f-ce15-4520-ba64-fd5aa4b0141a")
-AZURE_CLIENT_ID = os.environ.get("AZURE_CLIENT_ID", "8629ce52-7bc1-43bc-bd1e-81526f06647b")
-AZURE_ISSUER_URL = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}/v2.0"
-AZURE_JWKS_URL = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}/discovery/v2.0/keys"
-JWT_ALGORITHM = "RS256"
-JWT_AUDIENCE = os.environ.get("JWT_AUDIENCE", AZURE_CLIENT_ID)
-TOKEN_CACHE_TTL = int(os.environ.get("TOKEN_CACHE_TTL", "3600"))
-
-# JWKS キャッシュ（Lambda のコンテナ再利用時に利用）
-_jwks_cache: Dict[str, Any] = {}
-_jwks_cache_time: float = 0.0
 
 # CORS 設定（api/chat/lambda_function.py に合わせる）
 DEFAULT_CORS_HEADERS: Dict[str, str] = {
@@ -35,134 +17,6 @@ DEFAULT_CORS_HEADERS: Dict[str, str] = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
 }
-
-def get_jwks() -> Dict[str, Any]:
-    """Azure AD の JWKS を取得（キャッシュ対応）。"""
-    global _jwks_cache, _jwks_cache_time
-
-    current_time = time.time()
-    if _jwks_cache and (current_time - _jwks_cache_time) < TOKEN_CACHE_TTL:
-        return _jwks_cache
-
-    try:
-        response = requests.get(AZURE_JWKS_URL, timeout=10)
-        response.raise_for_status()
-        _jwks_cache = response.json()
-        _jwks_cache_time = current_time
-        return _jwks_cache
-    except Exception as exc:  # noqa: BLE001
-        print(f"JWKS取得エラー: {exc}")
-        if _jwks_cache:
-            return _jwks_cache
-        raise
-
-
-def validate_entra_token(token: str) -> Optional[Dict[str, Any]]:
-    """
-    EntraID（Azure AD）トークンの検証
-    Args:
-        token: JWTトークン
-    Returns:
-        dict: デコードされたクレーム（検証失敗時はNone）
-    """
-    try:
-        # JWTヘッダーを取得してkidを抽出
-        unverified_header = jwt.get_unverified_header(token)
-        kid = unverified_header.get("kid")
-
-        print(f"JWT header: {unverified_header}")
-
-        if not kid:
-            print("JWT header missing 'kid'")
-            return None
-
-        # トークンの中身をデバッグ用に出力（検証なし）
-        unverified_claims = jwt.get_unverified_claims(token)
-        print(f"JWT unverified claims - iss: {unverified_claims.get('iss')}")
-        print(f"JWT unverified claims - aud: {unverified_claims.get('aud')}")
-        print(f"JWT unverified claims - typ: {unverified_claims.get('typ')}")
-        print(f"Expected issuer: {AZURE_ISSUER_URL}")
-        print(f"Expected audience: {JWT_AUDIENCE}")
-
-        # JWKSから対応する公開鍵を取得
-        jwks = get_jwks()
-
-        # kidに対応する鍵を検索
-        public_key = None
-        for key in jwks.get("keys", []):
-            if key.get("kid") == kid:
-                # アルゴリズムを明示的に追加
-                key_with_alg = key.copy()
-                if "alg" not in key_with_alg:
-                    key_with_alg["alg"] = "RS256"  # Azure ADのデフォルト
-                print(f"Constructing JWK with algorithm: {key_with_alg.get('alg')}")
-                public_key = jwk.construct(key_with_alg)
-                break
-
-        if not public_key:
-            print(f"Public key not found for kid: {kid}")
-            print(f"Available kids in JWKS: {[key.get('kid') for key in jwks.get('keys', [])]}")
-            return None
-
-        # JWTを検証・デコード
-        payload = jwt.decode(
-            token,
-            public_key,
-            algorithms=[JWT_ALGORITHM],
-            audience=JWT_AUDIENCE,
-            issuer=AZURE_ISSUER_URL,
-        )
-
-        print(f"JWT decoded successfully. Claims: {payload}")
-        return payload
-
-    except JWTError as e:
-        print(f"JWT検証エラー: {e}")
-        print(f"JWT error type: {type(e)}")
-        return None
-    except Exception as e:  # noqa: BLE001
-        print(f"トークン検証中にエラーが発生: {e}")
-        print(f"Exception type: {type(e)}")
-        return None
-
-
-def authenticate_request(event: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """Authorization ヘッダーの Bearer トークンを検証する。"""
-    headers = event.get("headers", {}) or {}
-    print(f"Headers received: {headers}")
-
-    auth_header = None
-    for key, value in headers.items():
-        if isinstance(key, str) and key.lower() == "authorization":
-            auth_header = value
-            break
-
-    if not auth_header:
-        print("Authorization ヘッダーが見つかりません")
-        return None
-
-    print(f"Authorization header value: {auth_header}")
-    if not isinstance(auth_header, str) or not auth_header.startswith("Bearer "):
-        print("Bearer トークンではありません")
-        return None
-
-    token = auth_header[7:].strip()
-    if not token:
-        print("Bearer トークンが空です")
-        return None
-
-    claims = validate_entra_token(token)
-    if not claims:
-        print("トークン検証に失敗しました")
-        return None
-
-    return {
-        "user_id": claims.get("oid"),
-        "email": claims.get("preferred_username") or claims.get("email"),
-        "name": claims.get("name"),
-        "tenant_id": claims.get("tid"),
-        "claims": claims,
-    }
 
 
 def parse_form_data(body_bytes: bytes, content_type: str) -> Tuple[Dict[str, List[str]], List[dict]]:
@@ -228,15 +82,6 @@ def build_response(status_code: int, body: str, headers: Dict[str, str] | None =
 
 def handle_merge(event: dict) -> dict:
     """PDF マージ用エンドポイントの処理。"""
-    user_info = authenticate_request(event)
-    if not user_info:
-        return build_response(
-            401,
-            "認証に失敗しました。有効なEntraIDトークンが必要です。",
-            {"Content-Type": "text/plain; charset=utf-8"},
-        )
-
-    print("認証成功: ユーザー {email} ({user_id})".format(email=user_info.get("email"), user_id=user_info.get("user_id")))
     raw_headers = event.get("headers") or {}
     # すべて小文字キーにしてヘッダーを正規化
     headers = {k.lower(): v for k, v in raw_headers.items() if isinstance(v, str)}

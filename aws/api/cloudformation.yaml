@@ -1,0 +1,179 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  REST API, Lambda function, and supporting resources for the PDF merge service.
+
+Parameters:
+  LambdaCodeS3Bucket:
+    Type: String
+    Description: S3 bucket that stores the zipped Lambda deployment package (lambda_function.py and dependencies).
+  LambdaCodeS3Key:
+    Type: String
+    Description: S3 object key for the Lambda deployment package zip file.
+  LambdaLayerS3Bucket:
+    Type: String
+    Description: S3 bucket that stores the Lambda layer zip (lambda-layer-python313.zip).
+  LambdaLayerS3Key:
+    Type: String
+    Description: S3 object key for the Lambda layer zip file.
+  LambdaFunctionName:
+    Type: String
+    Default: pdf-merge-lambda
+    Description: Name for the PDF merge Lambda function.
+  ApiName:
+    Type: String
+    Default: pdf-merge-api
+    Description: Name for the API Gateway REST API.
+
+Resources:
+  PdfMergeLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Description: Execution role for the PDF merge Lambda function with CloudWatch Logs access.
+
+  PdfMergeLambdaLayer:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      LayerName: !Sub ${AWS::StackName}-pdf-merge-layer
+      Description: Dependencies for the PDF merge Lambda function (Python 3.13).
+      Content:
+        S3Bucket: !Ref LambdaLayerS3Bucket
+        S3Key: !Ref LambdaLayerS3Key
+      CompatibleRuntimes:
+        - python3.13
+
+  PdfMergeLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref LambdaFunctionName
+      Description: Merge multiple PDF files provided via API Gateway.
+      Runtime: python3.13
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt PdfMergeLambdaRole.Arn
+      Code:
+        S3Bucket: !Ref LambdaCodeS3Bucket
+        S3Key: !Ref LambdaCodeS3Key
+      Timeout: 30
+      MemorySize: 512
+      Layers:
+        - !Ref PdfMergeLambdaLayer
+
+  PdfMergeApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Ref ApiName
+      Description: REST API fronting the PDF merge Lambda function.
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  PdfMergeApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      ParentId: !GetAtt PdfMergeApi.RootResourceId
+      PathPart: pdf_merge
+
+  PdfMergeApiPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      ResourceId: !Ref PdfMergeApiResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PdfMergeLambdaFunction.Arn}/invocations
+
+  PdfMergeApiOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      ResourceId: !Ref PdfMergeApiResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+
+  PdfMergeDefault4xxResponse:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      ResponseType: DEFAULT_4XX
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+      ResponseTemplates:
+        application/json: '{"message":$context.error.messageString}'
+
+  PdfMergeDefault5xxResponse:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      ResponseType: DEFAULT_5XX
+      ResponseParameters:
+        gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+        gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+      ResponseTemplates:
+        application/json: '{"message":$context.error.messageString}'
+
+  PdfMergeApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - PdfMergeApiPostMethod
+      - PdfMergeApiOptionsMethod
+    Properties:
+      RestApiId: !Ref PdfMergeApi
+      Description: Deployment for the PDF merge API.
+      StageName: prod
+      StageDescription:
+        StageVariables:
+          LAMBDA_FUNCTION_NAME: !Ref LambdaFunctionName
+
+  PdfMergeLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref PdfMergeLambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${PdfMergeApi}/*/POST/pdf_merge
+
+Outputs:
+  ApiInvokeUrl:
+    Description: Invoke URL for the PDF merge endpoint.
+    Value: !Sub https://${PdfMergeApi}.execute-api.${AWS::Region}.amazonaws.com/prod/pdf_merge
+  LambdaFunctionArn:
+    Description: ARN of the PDF merge Lambda function.
+    Value: !GetAtt PdfMergeLambdaFunction.Arn
+  LambdaLayerArn:
+    Description: ARN of the Lambda layer created for the PDF merge service.
+    Value: !Ref PdfMergeLambdaLayer
+  LambdaExecutionRoleArn:
+    Description: ARN of the IAM role assumed by the Lambda function.
+    Value: !GetAtt PdfMergeLambdaRole.Arn

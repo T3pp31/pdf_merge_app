@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PDFマージサービス - Azure AD 認証</title>
-  <script src="https://alcdn.msauth.net/browser/2.35.0/js/msal-browser.min.js"></script>
+  <title>PDFマージサービス</title>
   <style>
     :root { --wine: #bb2642; }
     * {
@@ -21,37 +20,6 @@
       justify-content: center;
       align-items: center;
       color: #333;
-      visibility: hidden;
-    }
-
-    .auth-loading {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-    }
-
-    .auth-loading h2 {
-      margin-bottom: 16px;
-      font-size: 1.6rem;
-    }
-
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
     }
 
     .app-container {
@@ -61,7 +29,7 @@
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
       overflow: hidden;
-      display: none;
+      display: flex;
       flex-direction: column;
     }
 
@@ -389,11 +357,6 @@
   </style>
 </head>
 <body>
-  <div class="auth-loading" id="authLoading">
-    <h2>Azure ADで認証中...</h2>
-    <div class="spinner"></div>
-  </div>
-
   <div class="app-container" id="appContainer">
     <div class="header">
       <button class="home-button" onclick="navigateToHome()">← 戻る</button>
@@ -440,17 +403,6 @@
   <script>
     const API_ENDPOINT = "https://w1gtgd7eda.execute-api.ap-northeast-1.amazonaws.com/api1/pdfmerge";
 
-    const msalInstance = new msal.PublicClientApplication({
-      auth: {
-        clientId: "8629ce52-7bc1-43bc-bd1e-81526f06647b",
-        authority: "https://login.microsoftonline.com/a0ff080f-ce15-4520-ba64-fd5aa4b0141a",
-        redirectUri: window.location.href
-      }
-    });
-
-    let account = null;
-    let tokenRefreshInterval = null;
-    let currentToken = null;
     let selectedFiles = [];
     let currentDownloadUrl = null;
 
@@ -578,58 +530,12 @@
       updateStatus("ファイルリストをクリアしました。");
     });
 
-    async function getValidToken(forceRefresh = false) {
-      try {
-        if (!account) {
-          const result = await msalInstance.loginPopup({ scopes: ["openid", "profile"] });
-          account = result.account;
-        }
-
-        if (!forceRefresh && currentToken) {
-          return currentToken;
-        }
-
-        const tokenResult = await msalInstance.acquireTokenSilent({
-          scopes: ["openid", "profile"],
-          account,
-          forceRefresh: true
-        });
-
-        currentToken = tokenResult.idToken;
-        return currentToken;
-      } catch (error) {
-        console.warn("トークンのサイレント取得に失敗しました", error);
-        const tokenResult = await msalInstance.acquireTokenPopup({
-          scopes: ["openid", "profile"],
-          account
-        });
-        currentToken = tokenResult.idToken;
-        return currentToken;
-      }
-    }
-
-    function startTokenRefreshTimer() {
-      if (tokenRefreshInterval) {
-        clearInterval(tokenRefreshInterval);
-      }
-
-      tokenRefreshInterval = setInterval(async () => {
-        try {
-          await getValidToken(true);
-        } catch (error) {
-          console.error("トークン更新に失敗しました", error);
-          updateStatus("認証トークンの更新に失敗しました。ページを再読み込みしてください。", "error");
-        }
-      }, 45 * 60 * 1000);
-    }
-
-    // File -> Base64 (without data: prefix)
     function readFileAsBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const result = e.target.result || '';
-          const base64 = String(result).includes(',') ? String(result).split(',')[1] : String(result);
+          const result = e.target.result || "";
+          const base64 = String(result).includes(",") ? String(result).split(",")[1] : String(result);
           resolve(base64);
         };
         reader.onerror = (e) => reject(e);
@@ -637,7 +543,7 @@
       });
     }
 
-    async function mergePdfs(retryCount = 0) {
+    async function mergePdfs() {
       if (selectedFiles.length === 0) {
         updateStatus("マージするPDFを選択してください。", "error");
         return;
@@ -649,13 +555,10 @@
       downloadSection.style.display = "none";
 
       try {
-        const token = await getValidToken(retryCount > 0);
-
-        // Align request shape to other pages (JSON with base64 files)
         const filesForAPI = await Promise.all(
           selectedFiles.map(async (file) => ({
-            type: 'document',
-            media_type: file.type || 'application/pdf',
+            type: "document",
+            media_type: file.type || "application/pdf",
             data: await readFileAsBase64(file),
             name: file.name
           }))
@@ -664,16 +567,10 @@
         const response = await fetch(API_ENDPOINT, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ files: filesForAPI })
         });
-
-        if (response.status === 401 && retryCount === 0) {
-          console.log("認証エラーが発生したためトークンを更新して再試行します。");
-          return await mergePdfs(retryCount + 1);
-        }
 
         if (!response.ok) {
           let errorDetail = "PDFマージに失敗しました";
@@ -745,38 +642,11 @@
 
     mergeButton.addEventListener("click", () => mergePdfs());
 
-    window.addEventListener("load", async () => {
-      try {
-        const response = await msalInstance.handleRedirectPromise();
-        if (response && response.account) {
-          account = response.account;
-          showApp();
-        } else {
-          const accounts = msalInstance.getAllAccounts();
-          if (accounts.length > 0) {
-            account = accounts[0];
-            showApp();
-          } else {
-            await msalInstance.loginRedirect({ scopes: ["openid", "profile"] });
-          }
-        }
-      } catch (error) {
-        console.error("認証エラー", error);
-        updateStatus("Azure AD 認証に失敗しました: " + error.message, "error");
-        showApp();
-      }
-    });
-
-    function showApp() {
-      document.getElementById("authLoading").style.display = "none";
-      document.getElementById("appContainer").style.display = "flex";
-      document.body.style.visibility = "visible";
-      startTokenRefreshTimer();
-    }
-
     function navigateToHome() {
       window.location.href = "./index.html";
     }
+
+    renderFileList();
   </script>
 </body>
 </html>
