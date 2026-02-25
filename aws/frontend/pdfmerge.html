@@ -5,8 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PDFマージサービス</title>
   <style>
-    :root { --wine: #bb2642; }
-    * {
+    :root {
+      --primary: #6366f1;
+      --primary-light: #a5b4fc;
+      --primary-dark: #4f46e5;
+      --bg-gradient-start: #f0f4ff;
+      --bg-gradient-mid: #e8ecf8;
+      --bg-gradient-end: #f5f0ff;
+    }
+
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -14,29 +24,33 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: #fff;
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #333;
+      color: #1e293b;
+      padding: 24px 0;
     }
 
     .app-container {
       width: 95%;
       max-width: 960px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
     .header {
-      background: var(--wine);
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
       color: white;
-      padding: 24px 30px;
+      padding: 26px 30px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,8 +60,8 @@
     .home-button {
       position: absolute;
       left: 24px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 999px;
       padding: 8px 18px;
       color: white;
@@ -59,8 +73,8 @@
     }
 
     .home-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-1px);
     }
 
@@ -70,87 +84,93 @@
 
     .header h1 {
       font-size: 1.6rem;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
+      letter-spacing: -0.3px;
     }
 
     .content {
       padding: 30px;
-      background: #f8f9fa;
+      background: transparent;
       display: grid;
       gap: 24px;
     }
 
     .intro-card {
-      background: white;
-      padding: 20px 24px;
-      border-radius: 16px;
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 22px 26px;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.08);
       display: grid;
       gap: 12px;
     }
 
     .intro-card h2 {
-      font-size: 1.2rem;
-      color: #2d3a61;
+      font-size: 1.15rem;
+      color: #6366f1;
+      font-weight: 700;
     }
 
     .intro-card ul {
       margin-left: 1.2rem;
-      color: #555;
-      line-height: 1.6;
+      color: #475569;
+      line-height: 1.7;
     }
 
     .upload-area {
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      padding: 26px;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.08);
       display: grid;
       gap: 18px;
     }
 
     .drop-zone {
-      border: 2px dashed var(--wine);
+      border: 2px dashed var(--primary-light);
       border-radius: 16px;
-      padding: 40px 20px;
+      padding: 44px 20px;
       text-align: center;
-      background: #fff5f7;
+      background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
       transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s;
       cursor: pointer;
     }
 
     .drop-zone.dragover {
-      border-color: #a32038;
-      background: #ffe9ed;
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e0ff 100%);
       transform: translateY(-2px);
     }
 
     .drop-zone p {
-      color: #7a2535;
-      margin-bottom: 10px;
+      color: #6366f1;
+      margin-bottom: 12px;
       font-size: 1rem;
+      font-weight: 500;
     }
 
     .drop-zone span {
       display: inline-block;
       background: white;
-      border: 2px solid var(--wine);
+      border: 2px solid var(--primary-light);
       border-radius: 999px;
-      padding: 8px 18px;
-      color: var(--wine);
+      padding: 8px 20px;
+      color: var(--primary);
       font-weight: 600;
       transition: all 0.3s ease;
     }
 
     .drop-zone:hover span {
-      background: var(--wine);
+      background: var(--primary);
+      border-color: var(--primary);
       color: white;
     }
 
     .file-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .file-item {
@@ -158,9 +178,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 12px 16px;
-      background: #fff5f6;
+      background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
       border-radius: 12px;
-      border: 1px solid rgba(187, 38, 66, 0.25);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      transition: border-color 0.2s;
+    }
+
+    .file-item:hover {
+      border-color: rgba(99, 102, 241, 0.25);
     }
 
     .file-meta {
@@ -171,7 +196,7 @@
 
     .file-name {
       font-weight: 600;
-      color: #2d3a3d;
+      color: #334155;
       max-width: 320px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -180,19 +205,20 @@
 
     .file-size {
       font-size: 0.85rem;
-      color: #666;
+      color: #94a3b8;
     }
 
     .remove-button {
       background: transparent;
       border: none;
-      color: #d6455d;
+      color: var(--primary-light);
       font-size: 1.1rem;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: color 0.2s, transform 0.2s;
     }
 
     .remove-button:hover {
+      color: #ef4444;
       transform: scale(1.1);
     }
 
@@ -204,66 +230,68 @@
     }
 
     .secondary-button {
-      border: 2px solid var(--wine);
+      border: 2px solid var(--primary-light);
       background: white;
-      color: var(--wine);
+      color: var(--primary);
       border-radius: 999px;
-      padding: 10px 20px;
+      padding: 10px 22px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .secondary-button:hover {
-      background: var(--wine);
-      color: white;
+      background: rgba(99, 102, 241, 0.08);
+      border-color: var(--primary);
     }
 
     .primary-button {
       border: none;
-      background: var(--wine);
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: white;
       border-radius: 999px;
-      padding: 12px 26px;
+      padding: 12px 28px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
     }
 
     .primary-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(187, 38, 66, 0.35);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
     }
 
     .primary-button:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
 
     .status-area {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.08);
       display: grid;
       gap: 14px;
     }
 
     .status-message {
-      color: #495057;
+      color: #64748b;
       font-size: 0.95rem;
       line-height: 1.5;
     }
 
     .status-message.error {
-      color: #c0392b;
+      color: #ef4444;
     }
 
     .status-message.success {
-      color: #1e7e34;
+      color: #10b981;
     }
 
     .download-link {
@@ -277,7 +305,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 20px;
+      padding: 10px 22px;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       border-radius: 999px;
       color: white;
@@ -288,12 +316,12 @@
 
     .download-link a:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
     }
 
     .download-meta {
       font-size: 0.9rem;
-      color: #555;
+      color: #94a3b8;
     }
 
     .hidden-input {
@@ -308,7 +336,7 @@
 
       .app-container {
         width: 95%;
-        border-radius: 18px;
+        border-radius: 20px;
       }
 
       .header {
@@ -316,7 +344,7 @@
       }
 
       .header h1 {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
       }
 
       .home-button {

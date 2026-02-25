@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <title>PDF Merger</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 全体のスタイルは style.css にまとめる -->
     <style>
-        /* CSS を別テンプレートの style.css から読み込む */
         {% include "style.css" %}
     </style>
 </head>
 <body>
-    <!-- メインタイトル -->
     <h1>PDF Merger</h1>
+    <p style="color:#64748b; margin-top:8px; font-size:1rem; font-weight:500;">
+        複数のPDFファイルを1つに結合
+    </p>
 
-    <!-- PDF マージ用のアップロードフォーム -->
     <form action="/merge" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
@@ -50,7 +49,6 @@
     </div>
 
     <script>
-        // ファイル選択時に選択ファイル名をわかりやすく表示
         document.addEventListener("DOMContentLoaded", () => {
             const input = document.getElementById("pdfs");
             const fileSelected = document.getElementById("file-selected");

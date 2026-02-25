@@ -7,12 +7,19 @@
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <style>
         /* 全体レイアウト -------------------------------------------------- */
-        body {
-            background: linear-gradient(135deg, #232526 0%, #414345 100%);
-            color: #fff;
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            min-height: 100vh;
+        *,
+        *::before,
+        *::after {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8ecf8 50%, #f5f0ff 100%);
+            color: #1e293b;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,85 +27,112 @@
         }
 
         h1 {
-            margin-top: 40px;
-            font-size: 2.8rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-shadow: 0 2px 8px #0008;
+            margin-top: 48px;
+            font-size: 2.4rem;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-top: 8px;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         /* フォームブロック ------------------------------------------------ */
         form {
-            background: rgba(30, 30, 30, 0.95);
-            padding: 32px 40px 24px 40px;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px 0 #0006;
-            margin: 32px 0 24px 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 36px 44px 28px 44px;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin: 28px 0 24px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 320px;
+            min-width: 340px;
+            transition: box-shadow 0.3s;
+        }
+
+        form:hover {
+            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
         }
 
         .file-label {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            background: #232526;
-            border: 2px dashed #00c6ff;
-            border-radius: 10px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
+            align-items: center;
+            background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
+            border: 2px dashed #a5b4fc;
+            border-radius: 14px;
+            padding: 28px 24px;
+            margin-bottom: 16px;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
             width: 100%;
-            box-sizing: border-box;
         }
 
         .file-label:hover {
-            border-color: #0072ff;
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #eef2ff 0%, #e8e4ff 100%);
+            transform: translateY(-1px);
         }
 
         .file-label-title {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            color: #00c6ff;
-            margin-bottom: 8px;
+            color: #6366f1;
+            margin-bottom: 6px;
         }
 
         input[type="file"] {
             margin-bottom: 0;
-            color: #fff;
+            color: #475569;
             background: transparent;
             border: none;
             padding: 0;
         }
 
         button[type="submit"] {
-            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: #fff;
             border: none;
-            border-radius: 8px;
-            padding: 12px 32px;
-            font-size: 1.1rem;
+            border-radius: 999px;
+            padding: 12px 36px;
+            font-size: 1.05rem;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            box-shadow: 0 2px 8px #0072ff44;
-            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         button[type="submit"]:hover:not(:disabled) {
-            background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-            transform: translateY(-2px) scale(1.04);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         /* 広告エリア ------------------------------------------------------ */
         .ads {
-            margin-top: 32px;
+            margin-top: 36px;
+            margin-bottom: 36px;
             display: flex;
             flex-direction: row;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
@@ -108,55 +142,39 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(30, 30, 30, 0.85);
-            border-radius: 12px;
-            box-shadow: 0 2px 12px #0072ff33;
-            padding: 8px 12px;
-            transition: box-shadow 0.2s, transform 0.2s;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            padding: 10px 14px;
+            transition: box-shadow 0.3s, transform 0.2s;
         }
 
         .ads a:hover {
-            box-shadow: 0 4px 24px #00c6ff66;
-            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.16);
+            transform: translateY(-2px);
         }
 
         .ads img {
-            border-radius: 8px;
+            border-radius: 10px;
             max-width: 100%;
             height: auto;
             display: block;
         }
 
         .ads-link-text {
-            color: #00c6ff;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        /* レスポンシブ対応 ------------------------------------------------ */
-        @media (max-width: 900px) {
-            .ads {
-                flex-direction: column;
-                gap: 18px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            form {
-                min-width: 0;
-                width: 95vw;
-                padding: 18px 4vw 14px 4vw;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
+            color: #6366f1;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
         }
 
         /* ドラッグ&ドロップ ------------------------------------------------ */
         .file-label.dragover {
-            border-color: #0072ff;
-            background: #1a1a2e;
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e0ff 100%);
+            transform: translateY(-2px);
         }
 
         /* ファイルリスト -------------------------------------------------- */
@@ -164,18 +182,23 @@
             width: 100%;
             display: grid;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .file-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 14px;
-            background: rgba(0, 198, 255, 0.07);
-            border: 1px solid rgba(0, 198, 255, 0.25);
-            border-radius: 10px;
-            color: #fff;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            color: #1e293b;
+            transition: border-color 0.2s;
+        }
+
+        .file-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         .file-item .file-meta {
@@ -191,67 +214,69 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            color: #e0e0e0;
+            color: #334155;
         }
 
         .file-item .file-size {
             font-size: 0.8rem;
-            color: #aaa;
+            color: #94a3b8;
         }
 
         .remove-button {
             background: transparent;
             border: none;
-            color: #00c6ff;
+            color: #a5b4fc;
             font-size: 1.1rem;
             cursor: pointer;
             transition: color 0.2s;
         }
 
         .remove-button:hover {
-            color: #ff4d6d;
+            color: #ef4444;
         }
 
         /* ステータスエリア ------------------------------------------------ */
         .status-area {
-            background: rgba(30, 30, 30, 0.85);
-            border-radius: 14px;
-            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 18px 28px;
             margin-bottom: 16px;
-            min-width: 320px;
+            min-width: 340px;
             max-width: 520px;
             width: 100%;
-            box-sizing: border-box;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .status-message {
-            color: #ccc;
-            font-size: 0.97rem;
+            color: #64748b;
+            font-size: 0.95rem;
             margin: 0;
         }
 
         .status-message.error {
-            color: #ff6b6b;
+            color: #ef4444;
         }
 
         .status-message.success {
-            color: #6bffb8;
+            color: #10b981;
         }
 
         /* ダウンロードリンク ---------------------------------------------- */
         .download-link {
             display: none;
-            margin-top: 12px;
+            margin-top: 14px;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
         .download-link a {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 22px;
+            padding: 10px 24px;
             background: linear-gradient(135deg, #10b981, #059669);
             border-radius: 999px;
             color: #fff;
@@ -262,7 +287,7 @@
 
         .download-link a:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
 
         /* コントロールボタン行 -------------------------------------------- */
@@ -276,29 +301,45 @@
 
         .secondary-button {
             background: transparent;
-            border: 2px solid #00c6ff;
-            color: #00c6ff;
-            border-radius: 8px;
-            padding: 9px 18px;
-            font-size: 0.98rem;
+            border: 2px solid #a5b4fc;
+            color: #6366f1;
+            border-radius: 999px;
+            padding: 9px 20px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
 
         .secondary-button:hover {
-            background: rgba(0, 198, 255, 0.15);
+            background: rgba(99, 102, 241, 0.08);
+            border-color: #6366f1;
         }
 
-        button[type="submit"]:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
+        /* レスポンシブ対応 ------------------------------------------------ */
+        @media (max-width: 900px) {
+            .ads {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            form {
+                min-width: 0;
+                width: 95vw;
+                padding: 20px 5vw 16px 5vw;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <h1>PDF Merger</h1>
+    <p class="subtitle">複数のPDFファイルを1つに結合</p>
 
     <form id="mergeForm" onsubmit="return false;">
         <label for="pdfs" class="file-label" id="dropZone">
@@ -321,7 +362,7 @@
         <p class="status-message" id="statusMessage">ファイルを選択して「Merge PDFs」をクリックしてください。</p>
         <div class="download-link" id="downloadSection">
             <a id="downloadLink" href="#" download="merged.pdf">&#128196; マージ結果をダウンロード</a>
-            <span id="downloadMeta" style="color:#aaa; font-size:0.88rem;"></span>
+            <span id="downloadMeta" style="color:#94a3b8; font-size:0.88rem;"></span>
         </div>
     </div>
 
