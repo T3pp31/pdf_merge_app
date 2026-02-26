@@ -144,7 +144,11 @@ button[type="submit"]:hover {
     transform: translateY(-2px);
 }
 
-.ads img {
+.ads > img {
+    display: none;
+}
+
+.ads a img {
     border-radius: 10px;
     max-width: 100%;
     height: auto;
