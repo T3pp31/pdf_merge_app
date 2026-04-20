@@ -44,6 +44,28 @@
             font-weight: 500;
         }
 
+        /* プライバシーバッジ ---------------------------------------------- */
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 1px solid #6ee7b7;
+            border-radius: 999px;
+            color: #047857;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        }
+
+        .privacy-badge svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
         /* フォームブロック ------------------------------------------------ */
         form {
             background: rgba(255, 255, 255, 0.85);
@@ -344,6 +366,13 @@
 <body>
     <h1>PDF Merger</h1>
     <p class="subtitle">複数のPDFファイルを1つに結合</p>
+    <div class="privacy-badge" role="status" aria-label="プライバシー情報">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+        <span>ブラウザ内で処理・PDFはサーバーに送信されません</span>
+    </div>
 
     <form id="mergeForm" onsubmit="return false;">
         <div class="file-label" id="dropZone">
