@@ -148,54 +148,6 @@
             box-shadow: none;
         }
 
-        /* 広告エリア ------------------------------------------------------ */
-        .ads {
-            margin-top: 36px;
-            margin-bottom: 36px;
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .ads a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            padding: 10px 14px;
-            transition: box-shadow 0.3s, transform 0.2s;
-        }
-
-        .ads a:hover {
-            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.16);
-            transform: translateY(-2px);
-        }
-
-        .ads > img {
-            display: none;
-        }
-
-        .ads a img {
-            border-radius: 10px;
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .ads-link-text {
-            color: #6366f1;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-        }
-
         /* ドラッグ&ドロップ ------------------------------------------------ */
         .file-label.dragover {
             border-color: #6366f1;
@@ -343,13 +295,6 @@
         }
 
         /* レスポンシブ対応 ------------------------------------------------ */
-        @media (max-width: 900px) {
-            .ads {
-                flex-direction: column;
-                gap: 16px;
-            }
-        }
-
         @media (max-width: 600px) {
             form {
                 min-width: 0;
@@ -397,27 +342,6 @@
             <a id="downloadLink" href="#" download="merged.pdf">&#128196; マージ結果をダウンロード</a>
             <span id="downloadMeta" style="color:#94a3b8; font-size:0.88rem;"></span>
         </div>
-    </div>
-
-    <!-- アフィリエイト広告ブロック -->
-    <div class="ads">
-        <a href="https://px.a8.net/svt/ejp?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" rel="nofollow">
-            <img border="0" width="234" height="60" alt="" src="https://www22.a8.net/svt/bgt?aid=180705697115&wid=002&eno=01&mid=s00000000002006094000&mc=1">
-        </a>
-        <img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=2ZL5EP+1WGW4A+0K+10A5LT" alt="">
-
-        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+ASS3KQ+4EKC+631SX" rel="nofollow">
-            <img border="0" width="600" height="100" alt="" src="https://www22.a8.net/svt/bgt?aid=250321508653&wid=002&eno=01&mid=s00000020550001022000&mc=1">
-        </a>
-        <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4519B8+ASS3KQ+4EKC+631SX" alt="">
-
-        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BJKLSQ+14CS+6C9LD" rel="nofollow">
-            <img border="0" width="120" height="60" alt="" src="https://www24.a8.net/svt/bgt?aid=250321508698&wid=002&eno=01&mid=s00000005230001065000&mc=1">
-        </a>
-        <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4519B8+BJKLSQ+14CS+6C9LD" alt="">
-
-        <a href="https://px.a8.net/svt/ejp?a8mat=4519B8+BK61EI+5LNQ+5YJRM" rel="nofollow" class="ads-link-text">メルカリ</a>
-        <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4519B8+BK61EI+5LNQ+5YJRM" alt="">
     </div>
 
     <script>
