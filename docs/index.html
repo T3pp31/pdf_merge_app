@@ -3,559 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Merger</title>
+    <title>PDF結合</title>
+    <meta name="description" content="複数のPDFファイルをブラウザ内で1つに結合。サーバーへのアップロード不要。">
+    <meta property="og:title" content="PDF結合">
+    <meta property="og:description" content="複数のPDFファイルをブラウザ内で1つに結合。サーバーへのアップロード不要。">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M9 10h8v12H9zM15 10h8l-3 4 3 4h-8z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <style>
-        /* 全体レイアウト -------------------------------------------------- */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8ecf8 50%, #f5f0ff 100%);
-            color: #1e293b;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        h1 {
-            margin-top: 48px;
-            font-size: 2.4rem;
-            letter-spacing: -0.5px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            color: #64748b;
-            margin-top: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        /* プライバシーバッジ ---------------------------------------------- */
-        .privacy-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 16px;
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border: 1px solid #6ee7b7;
-            border-radius: 999px;
-            color: #047857;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
-        }
-
-        .privacy-badge svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        /* フォームブロック ------------------------------------------------ */
-        form {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 36px 44px 28px 44px;
-            border-radius: 20px;
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            margin: 28px 0 24px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 340px;
-            transition: box-shadow 0.3s;
-        }
-
-        form:hover {
-            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
-        }
-
-        .file-label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
-            border: 2px dashed #a5b4fc;
-            border-radius: 14px;
-            padding: 28px 24px;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: border-color 0.3s, background 0.3s, transform 0.2s;
-            width: 100%;
-        }
-
-        .file-label:hover {
-            border-color: #6366f1;
-            background: linear-gradient(135deg, #eef2ff 0%, #e8e4ff 100%);
-            transform: translateY(-1px);
-        }
-
-        .file-label-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: #6366f1;
-            margin-bottom: 6px;
-        }
-
-        input[type="file"] {
-            margin-bottom: 0;
-            color: #475569;
-            background: transparent;
-            border: none;
-            padding: 0;
-        }
-
-        button[type="submit"] {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: #fff;
-            border: none;
-            border-radius: 999px;
-            padding: 12px 36px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        button[type="submit"]:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-        }
-
-        button[type="submit"]:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* ドラッグ&ドロップ ------------------------------------------------ */
-        .file-label.dragover {
-            border-color: #6366f1;
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e0ff 100%);
-            transform: translateY(-2px);
-        }
-
-        /* ファイルリスト -------------------------------------------------- */
-        .file-list {
-            width: 100%;
-            display: grid;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #f8f7ff 0%, #f0eeff 100%);
-            border: 1px solid rgba(99, 102, 241, 0.15);
-            border-radius: 12px;
-            color: #1e293b;
-            transition: border-color 0.2s;
-        }
-
-        .file-item:hover {
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        .file-item .file-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .file-item .file-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            max-width: 260px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #334155;
-        }
-
-        .file-item .file-size {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .remove-button {
-            background: transparent;
-            border: none;
-            color: #a5b4fc;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .remove-button:hover {
-            color: #ef4444;
-        }
-
-        /* ステータスエリア ------------------------------------------------ */
-        .status-area {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 18px 28px;
-            margin-bottom: 16px;
-            min-width: 340px;
-            max-width: 520px;
-            width: 100%;
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-
-        .status-message {
-            color: #64748b;
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        .status-message.error {
-            color: #ef4444;
-        }
-
-        .status-message.success {
-            color: #10b981;
-        }
-
-        /* ダウンロードリンク ---------------------------------------------- */
-        .download-link {
-            display: none;
-            margin-top: 14px;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .download-link a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 24px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 999px;
-            color: #fff;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .download-link a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        /* コントロールボタン行 -------------------------------------------- */
-        .controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 8px;
-        }
-
-        .secondary-button {
-            background: transparent;
-            border: 2px solid #a5b4fc;
-            color: #6366f1;
-            border-radius: 999px;
-            padding: 9px 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, color 0.2s;
-        }
-
-        .secondary-button:hover {
-            background: rgba(99, 102, 241, 0.08);
-            border-color: #6366f1;
-        }
-
-        /* レスポンシブ対応 ------------------------------------------------ */
-        @media (max-width: 600px) {
-            form {
-                min-width: 0;
-                width: 95vw;
-                padding: 20px 5vw 16px 5vw;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <h1>PDF Merger</h1>
-    <p class="subtitle">複数のPDFファイルを1つに結合</p>
-    <div class="privacy-badge" role="status" aria-label="プライバシー情報">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="4" y="11" width="16" height="10" rx="2"></rect>
-            <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
-        </svg>
-        <span>ブラウザ内で処理・PDFはサーバーに送信されません</span>
-    </div>
-
-    <form id="mergeForm" onsubmit="return false;">
-        <div class="file-label" id="dropZone">
-            <span class="file-label-title">PDFファイルをドラッグ＆ドロップ、または選択</span>
-            <input type="file" name="pdfs" id="pdfs"
-                   accept="application/pdf" multiple
-                   style="display:none;">
+    <header class="site-header">
+        <span class="site-logo" data-i18n="hero.title">PDF結合</span>
+        <div class="lang-switch" role="group" aria-label="Language">
+            <button type="button" data-locale="ja" data-i18n="lang.ja" data-i18n-aria="lang.switch.ja" aria-pressed="true">JA</button>
+            <button type="button" data-locale="en" data-i18n="lang.en" data-i18n-aria="lang.switch.en" aria-pressed="false">EN</button>
         </div>
+    </header>
 
-        <div class="file-list" id="fileList" aria-live="polite"></div>
+    <main class="site-main">
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title" data-i18n="hero.title">PDF結合</h1>
+            <p class="subtitle" data-i18n="hero.subtitle">複数のPDFファイルを1つに結合</p>
+            <div class="privacy-badge" role="status" data-i18n-aria="privacy.aria">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+                </svg>
+                <span data-i18n="privacy.badge">ブラウザ内で処理・PDFはサーバーに送信されません</span>
+            </div>
+        </section>
 
-        <div class="controls">
-            <button type="button" class="secondary-button" id="chooseButton">ファイルを選択</button>
-            <button type="button" class="secondary-button" id="clearButton">リストをクリア</button>
-            <button type="submit" id="mergeButton" disabled>Merge PDFs</button>
-        </div>
-    </form>
+        <form id="mergeForm" class="card" onsubmit="return false;" aria-labelledby="hero-title">
+            <div class="drop-zone" id="dropZone" role="region" data-i18n-aria="dropzone.aria">
+                <svg class="drop-zone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <polyline points="9 15 12 12 15 15"></polyline>
+                </svg>
+                <span class="drop-zone-title" data-i18n="dropzone.title">PDFファイルをここにドラッグ＆ドロップ</span>
+                <span class="drop-zone-hint" data-i18n="dropzone.hint">PDFのみ · 最大20件 · ブラウザ内で処理</span>
+            </div>
 
-    <div class="status-area">
-        <p class="status-message" id="statusMessage">ファイルを選択して「Merge PDFs」をクリックしてください。</p>
-        <div class="download-link" id="downloadSection">
-            <a id="downloadLink" href="#" download="merged.pdf">&#128196; マージ結果をダウンロード</a>
-            <span id="downloadMeta" style="color:#94a3b8; font-size:0.88rem;"></span>
-        </div>
-    </div>
+            <input type="file" name="pdfs" id="pdfs" class="visually-hidden"
+                   accept="application/pdf" multiple>
 
-    <script>
-        // --- 状態 ---
-        let selectedFiles = [];
-        let currentDownloadUrl = null;
+            <div class="file-list-section">
+                <div class="file-list-empty" id="fileListEmpty">
+                    <p class="file-list-empty-title" data-i18n="empty.title">ファイルがまだありません</p>
+                    <p class="file-list-empty-hint" data-i18n="empty.hint">「ファイルを選択」から追加するか、上のエリアにドロップしてください</p>
+                </div>
+                <div class="file-list" id="fileList" aria-live="polite"></div>
+            </div>
 
-        // --- DOM参照 ---
-        const dropZone      = document.getElementById('dropZone');
-        const fileInput     = document.getElementById('pdfs');
-        const chooseButton  = document.getElementById('chooseButton');
-        const clearButton   = document.getElementById('clearButton');
-        const mergeButton   = document.getElementById('mergeButton');
-        const fileList      = document.getElementById('fileList');
-        const statusMsg     = document.getElementById('statusMessage');
-        const downloadSect  = document.getElementById('downloadSection');
-        const downloadLink  = document.getElementById('downloadLink');
-        const downloadMeta  = document.getElementById('downloadMeta');
+            <div class="controls">
+                <button type="button" class="secondary-button" id="chooseButton" data-i18n="button.choose">ファイルを選択</button>
+                <button type="button" class="secondary-button" id="clearButton" data-i18n="button.clear">リストをクリア</button>
+                <button type="button" class="primary-button" id="mergeButton" disabled>
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="merge-label" data-i18n="button.merge">PDFを結合</span>
+                </button>
+            </div>
+        </form>
 
-        // --- ステータス表示 ---
-        function updateStatus(message, type) {
-            statusMsg.textContent = message;
-            statusMsg.className = 'status-message';
-            if (type === 'error')   statusMsg.classList.add('error');
-            if (type === 'success') statusMsg.classList.add('success');
-        }
+        <section class="status-area" aria-live="polite">
+            <p class="status-message" id="statusMessage">ファイルを選択して「PDFを結合」をクリックしてください。</p>
+            <div class="progress-container" id="progressContainer" hidden>
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="download-section" id="downloadSection">
+                <a class="download-link" id="downloadLink" href="#" download="merged.pdf">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <polyline points="9 15 12 18 15 15"></polyline>
+                    </svg>
+                    <span data-i18n="download.label">マージ結果をダウンロード</span>
+                </a>
+                <span class="download-meta" id="downloadMeta"></span>
+            </div>
+        </section>
+    </main>
 
-        // --- ファイルリスト描画 ---
-        function renderFileList() {
-            fileList.innerHTML = '';
+    <footer class="site-footer">
+        <a href="https://github.com/T3pp31/pdf_merge_app" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub で見る</a>
+        <p class="footer-note" data-i18n="footer.note">すべての処理はブラウザ内で実行されます</p>
+    </footer>
 
-            if (selectedFiles.length === 0) {
-                mergeButton.disabled = true;
-                return;
-            }
-
-            selectedFiles.forEach(function(file, index) {
-                const item = document.createElement('div');
-                item.className = 'file-item';
-
-                const meta = document.createElement('div');
-                meta.className = 'file-meta';
-
-                const nameEl = document.createElement('span');
-                nameEl.className = 'file-name';
-                nameEl.textContent = file.name;
-
-                const sizeEl = document.createElement('span');
-                sizeEl.className = 'file-size';
-                sizeEl.textContent = (file.size / 1024).toFixed(1) + ' KB';
-
-                meta.appendChild(nameEl);
-                meta.appendChild(sizeEl);
-
-                const removeBtn = document.createElement('button');
-                removeBtn.type = 'button';
-                removeBtn.className = 'remove-button';
-                removeBtn.textContent = '\u2715';
-                removeBtn.setAttribute('aria-label', file.name + ' を削除');
-                removeBtn.addEventListener('click', (function(i) {
-                    return function() {
-                        selectedFiles.splice(i, 1);
-                        renderFileList();
-                        updateStatus('ファイルを削除しました。');
-                    };
-                })(index));
-
-                item.appendChild(meta);
-                item.appendChild(removeBtn);
-                fileList.appendChild(item);
-            });
-
-            mergeButton.disabled = false;
-        }
-
-        // --- ファイル追加 ---
-        function addFiles(fileListInput) {
-            const incoming = Array.from(fileListInput)
-                .filter(function(f) { return f.type === 'application/pdf'; });
-
-            if (incoming.length !== fileListInput.length) {
-                updateStatus('PDFファイル以外が含まれていたため除外しました。', 'error');
-            }
-
-            selectedFiles = selectedFiles.concat(incoming);
-
-            if (selectedFiles.length > 20) {
-                updateStatus('最大20件まで選択できます。超過分を除外しました。', 'error');
-                selectedFiles = selectedFiles.slice(0, 20);
-            }
-
-            if (selectedFiles.length > 0) {
-                updateStatus(selectedFiles.length + ' 件のPDFを選択しました。');
-            }
-
-            renderFileList();
-        }
-
-        // --- Blob URL解放 ---
-        function revokeDownloadUrl() {
-            if (currentDownloadUrl) {
-                URL.revokeObjectURL(currentDownloadUrl);
-                currentDownloadUrl = null;
-            }
-        }
-
-        // --- イベント登録 ---
-        dropZone.addEventListener('click', function() { fileInput.click(); });
-
-        dropZone.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', function() {
-            dropZone.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', function(e) {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            addFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener('change', function(e) {
-            addFiles(e.target.files);
-            fileInput.value = '';
-        });
-
-        chooseButton.addEventListener('click', function() { fileInput.click(); });
-
-        clearButton.addEventListener('click', function() {
-            selectedFiles = [];
-            renderFileList();
-            revokeDownloadUrl();
-            downloadSect.style.display = 'none';
-            updateStatus('ファイルリストをクリアしました。');
-        });
-
-        mergeButton.addEventListener('click', mergePdfs);
-
-        // --- PDFマージ処理 ---
-        async function mergePdfs() {
-            if (selectedFiles.length === 0) {
-                updateStatus('マージするPDFを選択してください。', 'error');
-                return;
-            }
-
-            mergeButton.disabled = true;
-            mergeButton.textContent = 'マージ処理中...';
-            downloadSect.style.display = 'none';
-            revokeDownloadUrl();
-            updateStatus('PDFを読み込んでいます...');
-
-            try {
-                const { PDFDocument } = PDFLib;
-                const mergedPdf = await PDFDocument.create();
-
-                for (let i = 0; i < selectedFiles.length; i++) {
-                    const file = selectedFiles[i];
-                    updateStatus('処理中: ' + (i + 1) + ' / ' + selectedFiles.length + '  (' + file.name + ')');
-
-                    const arrayBuffer = await file.arrayBuffer();
-
-                    let sourcePdf;
-                    try {
-                        sourcePdf = await PDFDocument.load(arrayBuffer);
-                    } catch (loadErr) {
-                        throw new Error('「' + file.name + '」の読み込みに失敗しました: ' + loadErr.message);
-                    }
-
-                    const pageIndices = sourcePdf.getPageIndices();
-                    const copiedPages = await mergedPdf.copyPages(sourcePdf, pageIndices);
-                    copiedPages.forEach(function(page) { mergedPdf.addPage(page); });
-                }
-
-                updateStatus('PDFを保存しています...');
-                const mergedBytes = await mergedPdf.save();
-
-                const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-                currentDownloadUrl = URL.createObjectURL(blob);
-
-                const now = new Date();
-                const timestamp = now.getFullYear().toString()
-                    + String(now.getMonth() + 1).padStart(2, '0')
-                    + String(now.getDate()).padStart(2, '0')
-                    + String(now.getHours()).padStart(2, '0')
-                    + String(now.getMinutes()).padStart(2, '0')
-                    + String(now.getSeconds()).padStart(2, '0');
-                const filename = 'merged_' + timestamp + '.pdf';
-
-                downloadLink.href = currentDownloadUrl;
-                downloadLink.download = filename;
-                downloadMeta.textContent =
-                    'サイズ: ' + (blob.size / 1024).toFixed(1) + ' KB  |  ' +
-                    'ページ数: ' + mergedPdf.getPageCount();
-
-                downloadSect.style.display = 'flex';
-                updateStatus(
-                    'マージが完了しました（' + mergedPdf.getPageCount() + ' ページ）。ダウンロードリンクから取得できます。',
-                    'success'
-                );
-
-            } catch (err) {
-                console.error('PDF merge error:', err);
-                updateStatus('PDFマージ中にエラーが発生しました: ' + err.message, 'error');
-            } finally {
-                mergeButton.disabled = selectedFiles.length === 0;
-                mergeButton.textContent = 'Merge PDFs';
-            }
-        }
-
-        // 初期化
-        renderFileList();
-    </script>
+    <script type="module" src="js/ui.js"></script>
 </body>
 </html>
