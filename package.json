@@ -9,6 +9,6 @@
     "pdf-lib": "1.17.1"
   },
   "devDependencies": {
-    "@cyclonedx/cyclonedx-npm": "^3.0.0"
+    "@cyclonedx/cyclonedx-npm": "^6.0.0"
   }
 }
