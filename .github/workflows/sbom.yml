@@ -1,0 +1,57 @@
+name: SBOM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - package.json
+      - package-lock.json
+      - .github/workflows/sbom.yml
+  pull_request:
+    paths:
+      - package.json
+      - package-lock.json
+      - sbom/bom.json
+      - .github/workflows/sbom.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate SBOM
+        run: |
+          cp sbom/bom.json sbom/bom.committed.json
+          npm run sbom
+
+      - name: Verify committed SBOM is up to date
+        if: github.event_name == 'pull_request'
+        run: |
+          normalize() { jq 'del(.serialNumber, .metadata.timestamp)' "$1"; }
+          if ! diff <(normalize sbom/bom.committed.json) <(normalize sbom/bom.json); then
+            echo "::error::sbom/bom.json is out of date. Run 'npm run sbom' and commit the result."
+            exit 1
+          fi
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom/bom.json
+          retention-days: 90
