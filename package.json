@@ -1,0 +1,14 @@
+{
+  "name": "pdf-merge-app",
+  "private": true,
+  "description": "Browser-based PDF merge tool (GitHub Pages)",
+  "scripts": {
+    "sbom": "cyclonedx-npm --output-file sbom/bom.json"
+  },
+  "dependencies": {
+    "pdf-lib": "1.17.1"
+  },
+  "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "^3.0.0"
+  }
+}
