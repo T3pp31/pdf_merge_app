@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:9d8640c2-627c-4f4d-b85c-97ccc4e8ee56",
+  "serialNumber": "urn:uuid:b609587e-71ca-459e-9181-9bf1822537cb",
   "metadata": {
-    "timestamp": "2026-08-22T15:48:36.118Z",
+    "timestamp": "2026-08-22T15:52:22.569Z",
     "tools": {
       "components": [
         {
@@ -1283,6 +1283,7 @@
       "bom-ref": "libxmljs2@0.37.0",
       "author": "marudor",
       "description": "libxml bindings for v8 javascript engine",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1324,6 +1325,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/libxmljs2"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1334,6 +1339,7 @@
       "bom-ref": "bindings@1.5.0",
       "author": "Nathan Rajlich",
       "description": "Helper module for loading your native module's .node file",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1375,6 +1381,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/bindings"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1385,6 +1395,7 @@
       "bom-ref": "file-uri-to-path@1.0.0",
       "author": "Nathan Rajlich",
       "description": "Convert a file: URI to a file path",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1426,6 +1437,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/file-uri-to-path"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1435,6 +1450,7 @@
       "version": "2.22.2",
       "bom-ref": "nan@2.22.2",
       "description": "Native Abstractions for Node.js: C++ header for Node 0.8 -> 22 compatibility",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1476,6 +1492,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/nan"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1486,6 +1506,7 @@
       "bom-ref": "node-gyp@11.5.0",
       "author": "Nathan Rajlich",
       "description": "Node.js native addon build tool",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1527,6 +1548,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/node-gyp"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1537,6 +1562,7 @@
       "bom-ref": "env-paths@2.2.1",
       "author": "Sindre Sorhus",
       "description": "Get paths for storing things like data, config, cache, etc",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1578,6 +1604,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/env-paths"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1588,6 +1618,7 @@
       "bom-ref": "exponential-backoff@3.1.3",
       "author": "Sami Sayegh",
       "description": "A utility that allows retrying a function with an exponential delay between attempts.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1629,6 +1660,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/exponential-backoff"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1638,6 +1673,7 @@
       "version": "4.2.11",
       "bom-ref": "graceful-fs@4.2.11",
       "description": "A drop-in replacement for fs, making various improvements.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1679,6 +1715,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/graceful-fs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1689,6 +1729,7 @@
       "bom-ref": "make-fetch-happen@14.0.3",
       "author": "GitHub Inc.",
       "description": "Opinionated, caching, retrying fetch client",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1730,6 +1771,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/make-fetch-happen"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1741,6 +1786,7 @@
       "bom-ref": "@npmcli/agent@3.0.0",
       "author": "GitHub Inc.",
       "description": "the http/https agent used by the npm cli",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1782,6 +1828,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@npmcli/agent"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1792,6 +1842,7 @@
       "bom-ref": "agent-base@7.1.4",
       "author": "Nathan Rajlich",
       "description": "Turn a function into an `http.Agent` instance",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1833,6 +1884,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/agent-base"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1843,6 +1898,7 @@
       "bom-ref": "http-proxy-agent@7.0.2",
       "author": "Nathan Rajlich",
       "description": "An HTTP(s) proxy `http.Agent` implementation for HTTP",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1884,6 +1940,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/http-proxy-agent"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1894,6 +1954,7 @@
       "bom-ref": "debug@4.4.3",
       "author": "Josh Junon",
       "description": "Lightweight debugging utility for Node.js and the browser",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1935,6 +1996,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/debug"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1944,6 +2009,7 @@
       "version": "2.1.3",
       "bom-ref": "ms@2.1.3",
       "description": "Tiny millisecond conversion utility",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -1985,6 +2051,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ms"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1995,6 +2065,7 @@
       "bom-ref": "https-proxy-agent@7.0.6",
       "author": "Nathan Rajlich",
       "description": "An HTTP(s) proxy `http.Agent` implementation for HTTPS",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2036,6 +2107,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/https-proxy-agent"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2087,6 +2162,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/lru-cache"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2097,6 +2176,7 @@
       "bom-ref": "socks-proxy-agent@8.0.5",
       "author": "Nathan Rajlich",
       "description": "A SOCKS proxy `http.Agent` implementation for HTTP and HTTPS",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2138,6 +2218,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/socks-proxy-agent"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2148,6 +2232,7 @@
       "bom-ref": "socks@2.8.9",
       "author": "Josh Glazebrook",
       "description": "Fully featured SOCKS proxy client supporting SOCKSv4, SOCKSv4a, and SOCKSv5. Includes Bind and Associate functionality.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2189,6 +2274,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/socks"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2199,6 +2288,7 @@
       "bom-ref": "ip-address@10.2.0",
       "author": "Beau Gunderson",
       "description": "A library for parsing IPv4 and IPv6 IP addresses in node and the browser.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2240,6 +2330,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ip-address"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2250,6 +2344,7 @@
       "bom-ref": "smart-buffer@4.2.0",
       "author": "Josh Glazebrook",
       "description": "smart-buffer is a Buffer wrapper that adds automatic read & write offset tracking, string operations, data insertions, and more.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2291,6 +2386,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/smart-buffer"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2301,6 +2400,7 @@
       "bom-ref": "cacache@19.0.1",
       "author": "GitHub Inc.",
       "description": "Fast, fault-tolerant, cross-platform, disk-based, data-agnostic, content-addressable cache.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2342,6 +2442,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/cacache"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2353,6 +2457,7 @@
       "bom-ref": "@npmcli/fs@4.0.0",
       "author": "GitHub Inc.",
       "description": "filesystem utilities for the npm cli",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2394,6 +2499,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@npmcli/fs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2445,6 +2554,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/semver"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2455,6 +2568,7 @@
       "bom-ref": "fs-minipass@3.0.3",
       "author": "GitHub Inc.",
       "description": "fs read and write streams based on minipass",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2496,6 +2610,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/fs-minipass"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2506,6 +2624,7 @@
       "bom-ref": "minipass@7.1.3",
       "author": "Isaac Z. Schlueter",
       "description": "minimal implementation of a PassThrough stream",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2547,6 +2666,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2557,6 +2680,7 @@
       "bom-ref": "glob@10.5.0",
       "author": "Isaac Z. Schlueter",
       "description": "the most correct and second fastest glob implementation in JavaScript",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2598,6 +2722,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/glob"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2608,6 +2736,7 @@
       "bom-ref": "foreground-child@3.3.1",
       "author": "Isaac Z. Schlueter",
       "description": "Run a child as if it's the foreground process. Give it stdio. Exit when it exits.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2649,6 +2778,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/foreground-child"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2659,6 +2792,7 @@
       "bom-ref": "cross-spawn@7.0.6",
       "author": "André Cruz",
       "description": "Cross platform child_process#spawn and child_process#spawnSync",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2700,6 +2834,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/cross-spawn"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -2710,6 +2848,7 @@
           "bom-ref": "cross-spawn@7.0.6|which@2.0.2",
           "author": "Isaac Z. Schlueter",
           "description": "Like which(1) unix command. Find the first instance of an executable in the PATH.",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -2751,6 +2890,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/cross-spawn/node_modules/which"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -2761,6 +2904,7 @@
           "bom-ref": "cross-spawn@7.0.6|isexe@2.0.0",
           "author": "Isaac Z. Schlueter",
           "description": "Minimal module to check if a file is executable.",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -2802,6 +2946,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/cross-spawn/node_modules/isexe"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -2814,6 +2962,7 @@
       "bom-ref": "path-key@3.1.1",
       "author": "Sindre Sorhus",
       "description": "Get the PATH environment variable key cross-platform",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2855,6 +3004,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/path-key"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2865,6 +3018,7 @@
       "bom-ref": "shebang-command@2.0.0",
       "author": "Kevin Mårtensson",
       "description": "Get the command from a shebang",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2906,6 +3060,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/shebang-command"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2916,6 +3074,7 @@
       "bom-ref": "shebang-regex@3.0.0",
       "author": "Sindre Sorhus",
       "description": "Regular expression for matching a shebang line",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -2957,6 +3116,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/shebang-regex"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -2967,6 +3130,7 @@
       "bom-ref": "signal-exit@4.1.0",
       "author": "Ben Coe",
       "description": "when you want to fire an event no matter how a process exits.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3008,6 +3172,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/signal-exit"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3018,6 +3186,7 @@
       "bom-ref": "jackspeak@3.4.3",
       "author": "Isaac Z. Schlueter",
       "description": "A very strict and proper argument parser.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3059,6 +3228,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/jackspeak"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3070,6 +3243,7 @@
       "bom-ref": "@isaacs/cliui@8.0.2",
       "author": "Ben Coe",
       "description": "easily create complex multi-column command-line-interfaces",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3111,6 +3285,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@isaacs/cliui"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3121,6 +3299,7 @@
       "bom-ref": "string-width@4.2.3",
       "author": "Sindre Sorhus",
       "description": "Get the visual width of a string - the number of columns required to display it",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3162,6 +3341,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/string-width-cjs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -3172,6 +3355,7 @@
           "bom-ref": "string-width@4.2.3|emoji-regex@8.0.0",
           "author": "Mathias Bynens",
           "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3213,6 +3397,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/string-width-cjs/node_modules/emoji-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3223,6 +3411,7 @@
           "bom-ref": "string-width@4.2.3|strip-ansi@6.0.1",
           "author": "Sindre Sorhus",
           "description": "Strip ANSI escape codes from a string",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3264,6 +3453,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/string-width-cjs/node_modules/strip-ansi"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3274,6 +3467,7 @@
           "bom-ref": "string-width@4.2.3|ansi-regex@5.0.1",
           "author": "Sindre Sorhus",
           "description": "Regular expression for matching ANSI escape codes",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3315,6 +3509,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/string-width-cjs/node_modules/ansi-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -3327,6 +3525,7 @@
       "bom-ref": "is-fullwidth-code-point@3.0.0",
       "author": "Sindre Sorhus",
       "description": "Check if the character represented by a given Unicode code point is fullwidth",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3368,6 +3567,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/is-fullwidth-code-point"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3378,6 +3581,7 @@
       "bom-ref": "string-width@5.1.2",
       "author": "Sindre Sorhus",
       "description": "Get the visual width of a string - the number of columns required to display it",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3419,6 +3623,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/string-width"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3429,6 +3637,7 @@
       "bom-ref": "eastasianwidth@0.2.0",
       "author": "Masaki Komagata",
       "description": "Get East Asian Width from a character.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3470,6 +3679,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/eastasianwidth"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3480,6 +3693,7 @@
       "bom-ref": "emoji-regex@9.2.2",
       "author": "Mathias Bynens",
       "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3521,6 +3735,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/emoji-regex"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3531,6 +3749,7 @@
       "bom-ref": "strip-ansi@7.2.0",
       "author": "Sindre Sorhus",
       "description": "Strip ANSI escape codes from a string",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3572,6 +3791,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/strip-ansi"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3582,6 +3805,7 @@
       "bom-ref": "strip-ansi@6.0.1",
       "author": "Sindre Sorhus",
       "description": "Strip ANSI escape codes from a string",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3623,6 +3847,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/strip-ansi-cjs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -3633,6 +3861,7 @@
           "bom-ref": "strip-ansi@6.0.1|ansi-regex@5.0.1",
           "author": "Sindre Sorhus",
           "description": "Regular expression for matching ANSI escape codes",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3674,6 +3903,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/strip-ansi-cjs/node_modules/ansi-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -3686,6 +3919,7 @@
       "bom-ref": "ansi-regex@6.2.2",
       "author": "Sindre Sorhus",
       "description": "Regular expression for matching ANSI escape codes",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3727,6 +3961,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ansi-regex"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -3737,6 +3975,7 @@
       "bom-ref": "wrap-ansi@7.0.0",
       "author": "Sindre Sorhus",
       "description": "Wordwrap a string with ANSI escape codes",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -3778,6 +4017,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/wrap-ansi-cjs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -3788,6 +4031,7 @@
           "bom-ref": "wrap-ansi@7.0.0|ansi-styles@4.3.0",
           "author": "Sindre Sorhus",
           "description": "ANSI escape codes for styling strings in the terminal",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3829,6 +4073,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/ansi-styles"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3839,6 +4087,7 @@
           "bom-ref": "wrap-ansi@7.0.0|string-width@4.2.3",
           "author": "Sindre Sorhus",
           "description": "Get the visual width of a string - the number of columns required to display it",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3880,6 +4129,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/string-width"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3890,6 +4143,7 @@
           "bom-ref": "wrap-ansi@7.0.0|emoji-regex@8.0.0",
           "author": "Mathias Bynens",
           "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3931,6 +4185,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/emoji-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3941,6 +4199,7 @@
           "bom-ref": "wrap-ansi@7.0.0|strip-ansi@6.0.1",
           "author": "Sindre Sorhus",
           "description": "Strip ANSI escape codes from a string",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -3982,6 +4241,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/strip-ansi"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -3992,6 +4255,7 @@
           "bom-ref": "wrap-ansi@7.0.0|ansi-regex@5.0.1",
           "author": "Sindre Sorhus",
           "description": "Regular expression for matching ANSI escape codes",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -4033,6 +4297,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/ansi-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -4045,6 +4313,7 @@
       "bom-ref": "color-convert@2.0.1",
       "author": "Heather Arthur",
       "description": "Plain color conversion functions",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4086,6 +4355,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/color-convert"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4096,6 +4369,7 @@
       "bom-ref": "color-name@1.1.4",
       "author": "DY",
       "description": "A list of color names and its values",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4137,6 +4411,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/color-name"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4147,6 +4425,7 @@
       "bom-ref": "wrap-ansi@8.1.0",
       "author": "Sindre Sorhus",
       "description": "Wordwrap a string with ANSI escape codes",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4188,6 +4467,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/wrap-ansi"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4198,6 +4481,7 @@
       "bom-ref": "ansi-styles@6.2.3",
       "author": "Sindre Sorhus",
       "description": "ANSI escape codes for styling strings in the terminal",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4239,6 +4523,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ansi-styles"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4291,6 +4579,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@pkgjs/parseargs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4301,6 +4593,7 @@
       "bom-ref": "minimatch@9.0.9",
       "author": "Isaac Z. Schlueter",
       "description": "a glob matcher in javascript",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4342,6 +4635,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minimatch"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4352,6 +4649,7 @@
       "bom-ref": "brace-expansion@2.1.2",
       "author": "Julian Gruber",
       "description": "Brace expansion as known from sh/bash",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4393,6 +4691,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/brace-expansion"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4403,6 +4705,7 @@
       "bom-ref": "balanced-match@1.0.2",
       "author": "Julian Gruber",
       "description": "Match balanced character pairs, like \"{\" and \"}\"",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4444,6 +4747,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/balanced-match"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4454,6 +4761,7 @@
       "bom-ref": "package-json-from-dist@1.0.1",
       "author": "Isaac Z. Schlueter",
       "description": "Load the local package.json from either src or dist folder",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4495,6 +4803,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/package-json-from-dist"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4505,6 +4817,7 @@
       "bom-ref": "path-scurry@1.11.1",
       "author": "Isaac Z. Schlueter",
       "description": "walk paths fast and efficiently",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4546,6 +4859,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/path-scurry"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4556,6 +4873,7 @@
       "bom-ref": "minipass-collect@2.0.1",
       "author": "Isaac Z. Schlueter",
       "description": "A Minipass stream that collects all the data into a single chunk",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4597,6 +4915,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass-collect"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4607,6 +4929,7 @@
       "bom-ref": "minipass-flush@1.0.7",
       "author": "Isaac Z. Schlueter",
       "description": "A Minipass stream that calls a flush function before emitting 'end'",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4648,6 +4971,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass-flush"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -4658,6 +4985,7 @@
           "bom-ref": "minipass-flush@1.0.7|minipass@3.3.6",
           "author": "Isaac Z. Schlueter",
           "description": "minimal implementation of a PassThrough stream",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -4699,6 +5027,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-flush/node_modules/minipass"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -4709,6 +5041,7 @@
           "bom-ref": "minipass-flush@1.0.7|yallist@4.0.0",
           "author": "Isaac Z. Schlueter",
           "description": "Yet Another Linked List",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -4750,6 +5083,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-flush/node_modules/yallist"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -4762,6 +5099,7 @@
       "bom-ref": "minipass-pipeline@1.2.4",
       "author": "Isaac Z. Schlueter",
       "description": "create a pipeline of streams using Minipass",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4788,6 +5126,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass-pipeline"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -4798,6 +5140,7 @@
           "bom-ref": "minipass-pipeline@1.2.4|minipass@3.3.6",
           "author": "Isaac Z. Schlueter",
           "description": "minimal implementation of a PassThrough stream",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -4839,6 +5182,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-pipeline/node_modules/minipass"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -4849,6 +5196,7 @@
           "bom-ref": "minipass-pipeline@1.2.4|yallist@4.0.0",
           "author": "Isaac Z. Schlueter",
           "description": "Yet Another Linked List",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -4890,6 +5238,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-pipeline/node_modules/yallist"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -4902,6 +5254,7 @@
       "bom-ref": "p-map@7.0.6",
       "author": "Sindre Sorhus",
       "description": "Map over promises concurrently",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4943,6 +5296,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/p-map"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4953,6 +5310,7 @@
       "bom-ref": "ssri@12.0.0",
       "author": "GitHub Inc.",
       "description": "Standard Subresource Integrity library -- parses, serializes, generates, and verifies integrity metadata according to the SRI spec.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -4994,6 +5352,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ssri"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5004,6 +5366,7 @@
       "bom-ref": "tar@7.5.21",
       "author": "Isaac Z. Schlueter",
       "description": "tar for node",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5045,6 +5408,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/tar"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5055,6 +5422,7 @@
       "bom-ref": "unique-filename@4.0.0",
       "author": "GitHub Inc.",
       "description": "Generate a unique filename for use in temporary directories or caches.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5096,6 +5464,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/unique-filename"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5106,6 +5478,7 @@
       "bom-ref": "unique-slug@5.0.0",
       "author": "GitHub Inc.",
       "description": "Generate a unique character string suitible for use in files and URLs.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5147,6 +5520,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/unique-slug"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5157,6 +5534,7 @@
       "bom-ref": "imurmurhash@0.1.4",
       "author": "Jens Taylor",
       "description": "An incremental implementation of MurmurHash3",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5198,6 +5576,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/imurmurhash"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5208,6 +5590,7 @@
       "bom-ref": "http-cache-semantics@4.2.0",
       "author": "Kornel Lesiński",
       "description": "Parses Cache-Control and other headers. Helps building correct HTTP caches and proxies",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5249,6 +5632,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/http-cache-semantics"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5259,6 +5646,7 @@
       "bom-ref": "minipass-fetch@4.0.1",
       "author": "GitHub Inc.",
       "description": "An implementation of window.fetch in Node.js using Minipass streams",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5300,6 +5688,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass-fetch"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5352,6 +5744,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/encoding"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5404,6 +5800,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/iconv-lite"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5456,6 +5856,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/safer-buffer"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5466,6 +5870,7 @@
       "bom-ref": "minipass-sized@1.0.3",
       "author": "Isaac Z. Schlueter",
       "description": "A Minipass stream that raises an error if you get a different number of bytes than expected",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5507,6 +5912,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minipass-sized"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -5517,6 +5926,7 @@
           "bom-ref": "minipass-sized@1.0.3|minipass@3.3.6",
           "author": "Isaac Z. Schlueter",
           "description": "minimal implementation of a PassThrough stream",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -5558,6 +5968,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-sized/node_modules/minipass"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         },
@@ -5568,6 +5982,7 @@
           "bom-ref": "minipass-sized@1.0.3|yallist@4.0.0",
           "author": "Isaac Z. Schlueter",
           "description": "Yet Another Linked List",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -5609,6 +6024,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/minipass-sized/node_modules/yallist"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -5621,6 +6040,7 @@
       "bom-ref": "minizlib@3.1.0",
       "author": "Isaac Z. Schlueter",
       "description": "A small fast zlib stream built on [minipass](http://npm.im/minipass) and Node.js's zlib binding.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5662,6 +6082,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minizlib"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5671,6 +6095,7 @@
       "version": "1.0.0",
       "bom-ref": "negotiator@1.0.0",
       "description": "HTTP content negotiation",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5712,6 +6137,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/negotiator"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5722,6 +6151,7 @@
       "bom-ref": "proc-log@5.0.0",
       "author": "GitHub Inc.",
       "description": "just emit 'log' events on the process object",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5763,6 +6193,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/proc-log"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5773,6 +6207,7 @@
       "bom-ref": "promise-retry@2.0.1",
       "author": "IndigoUnited",
       "description": "Retries a function that returns a promise, leveraging the power of the retry module.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5814,6 +6249,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/promise-retry"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5824,6 +6263,7 @@
       "bom-ref": "err-code@2.0.3",
       "author": "IndigoUnited",
       "description": "Create an error with a code",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5865,6 +6305,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/err-code"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5875,6 +6319,7 @@
       "bom-ref": "retry@0.12.0",
       "author": "Tim Koschützki",
       "description": "Abstraction for exponential and custom retry strategies for failed operations.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5916,6 +6361,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/retry"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5926,6 +6375,7 @@
       "bom-ref": "nopt@8.1.0",
       "author": "GitHub Inc.",
       "description": "Option parsing for Node, supporting types, shorthands, etc. Used by npm.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5967,6 +6417,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/nopt"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -5977,6 +6431,7 @@
       "bom-ref": "abbrev@3.0.1",
       "author": "GitHub Inc.",
       "description": "Like ruby's abbrev module, but in js",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6018,6 +6473,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/abbrev"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6029,6 +6488,7 @@
       "bom-ref": "@isaacs/fs-minipass@4.0.1",
       "author": "Isaac Z. Schlueter",
       "description": "fs read and write streams based on minipass",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6070,6 +6530,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@isaacs/fs-minipass"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6080,6 +6544,7 @@
       "bom-ref": "chownr@3.0.0",
       "author": "Isaac Z. Schlueter",
       "description": "like `chown -R`",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6121,6 +6586,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/chownr"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6131,6 +6600,7 @@
       "bom-ref": "yallist@5.0.0",
       "author": "Isaac Z. Schlueter",
       "description": "Yet Another Linked List",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6172,6 +6642,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/yallist"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6182,6 +6656,7 @@
       "bom-ref": "tinyglobby@0.2.17",
       "author": "Superchupu",
       "description": "A fast and minimal alternative to globby and fast-glob",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6223,6 +6698,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/tinyglobby"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6233,6 +6712,7 @@
       "bom-ref": "fdir@6.5.0",
       "author": "thecodrr",
       "description": "The fastest directory crawler & globbing alternative to glob, fast-glob, & tiny-glob. Crawls 1m files in < 1s",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6274,6 +6754,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/fdir"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6284,6 +6768,7 @@
       "bom-ref": "picomatch@4.0.5",
       "author": "Jon Schlinkert",
       "description": "Blazing fast and accurate glob matcher written in JavaScript, with no dependencies and full support for standard and extended Bash glob features, including braces, extglobs, POSIX brackets, and regular expressions.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6325,6 +6810,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/picomatch"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6335,6 +6824,7 @@
       "bom-ref": "which@5.0.0",
       "author": "GitHub Inc.",
       "description": "Like which(1) unix command. Find the first instance of an executable in the PATH.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6376,6 +6866,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/which"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6386,6 +6880,7 @@
       "bom-ref": "isexe@3.1.5",
       "author": "Isaac Z. Schlueter",
       "description": "Minimal module to check if a file is executable.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6427,6 +6922,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/isexe"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6437,6 +6936,7 @@
       "bom-ref": "prebuild-install@7.1.3",
       "author": "Mathias Buus",
       "description": "A command line tool to easily install prebuilt binaries for multiple version of node/iojs on a specific platform",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6478,6 +6978,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/prebuild-install"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6488,6 +6992,7 @@
       "bom-ref": "detect-libc@2.1.2",
       "author": "Lovell Fuller",
       "description": "Node.js module to detect the C standard library (libc) implementation family and version",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6529,6 +7034,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/detect-libc"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6539,6 +7048,7 @@
       "bom-ref": "expand-template@2.0.3",
       "author": "LM",
       "description": "Expand placeholders in a template string",
+      "scope": "optional",
       "licenses": [
         {
           "expression": "(MIT OR WTFPL)",
@@ -6578,6 +7088,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/expand-template"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6588,6 +7102,7 @@
       "bom-ref": "github-from-package@0.0.0",
       "author": "James Halliday",
       "description": "return the github url from a package.json file",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6629,6 +7144,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/github-from-package"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6639,6 +7158,7 @@
       "bom-ref": "minimist@1.2.8",
       "author": "James Halliday",
       "description": "parse argument options",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6680,6 +7200,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/minimist"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6690,6 +7214,7 @@
       "bom-ref": "mkdirp-classic@0.5.3",
       "author": "Mathias Buus",
       "description": "Mirror of mkdirp 0.5.2",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6731,6 +7256,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/mkdirp-classic"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6741,6 +7270,7 @@
       "bom-ref": "napi-build-utils@2.0.0",
       "author": "Jim Schlight",
       "description": "A set of utilities to assist developers of tools that build N-API native add-ons",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6782,6 +7312,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/napi-build-utils"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6792,6 +7326,7 @@
       "bom-ref": "node-abi@3.94.0",
       "author": "Lukas Geiger",
       "description": "Get the Node ABI for a given target and runtime, and vice versa.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6833,6 +7368,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/node-abi"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6843,6 +7382,7 @@
       "bom-ref": "pump@3.0.4",
       "author": "Mathias Buus Madsen",
       "description": "pipe streams together and close all of them if one of them closes",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6884,6 +7424,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/pump"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6894,6 +7438,7 @@
       "bom-ref": "end-of-stream@1.4.5",
       "author": "Mathias Buus",
       "description": "Call a callback when a readable/writable/duplex stream has completed or failed.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6935,6 +7480,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/end-of-stream"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6945,6 +7494,7 @@
       "bom-ref": "once@1.4.0",
       "author": "Isaac Z. Schlueter",
       "description": "Run a function exactly one time",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -6986,6 +7536,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/once"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -6996,6 +7550,7 @@
       "bom-ref": "wrappy@1.0.2",
       "author": "Isaac Z. Schlueter",
       "description": "Callback wrapping utility",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7037,6 +7592,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/wrappy"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7047,6 +7606,7 @@
       "bom-ref": "rc@1.2.8",
       "author": "Dominic Tarr",
       "description": "hardwired configuration loader",
+      "scope": "optional",
       "licenses": [
         {
           "expression": "(BSD-2-Clause OR MIT OR Apache-2.0)",
@@ -7086,6 +7646,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/rc"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7096,6 +7660,7 @@
       "bom-ref": "deep-extend@0.6.0",
       "author": "Viacheslav Lotsmanov",
       "description": "Recursive object extending",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7144,6 +7709,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/deep-extend"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7154,6 +7723,7 @@
       "bom-ref": "ini@1.3.8",
       "author": "Isaac Z. Schlueter",
       "description": "An ini encoder/decoder for node",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7195,6 +7765,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ini"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7205,6 +7779,7 @@
       "bom-ref": "strip-json-comments@2.0.1",
       "author": "Sindre Sorhus",
       "description": "Strip comments from JSON. Lets you use comments in your JSON files!",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7246,6 +7821,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/strip-json-comments"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7256,6 +7835,7 @@
       "bom-ref": "simple-get@4.0.1",
       "author": "Feross Aboukhadijeh",
       "description": "Simplest way to make http get requests. Supports HTTPS, redirects, gzip/deflate, streams in < 100 lines.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7297,6 +7877,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/simple-get"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7307,6 +7891,7 @@
       "bom-ref": "decompress-response@6.0.0",
       "author": "Sindre Sorhus",
       "description": "Decompress a HTTP response if needed",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7348,6 +7933,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/decompress-response"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7358,6 +7947,7 @@
       "bom-ref": "mimic-response@3.1.0",
       "author": "Sindre Sorhus",
       "description": "Mimic a Node.js HTTP response stream",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7399,6 +7989,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/mimic-response"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7409,6 +8003,7 @@
       "bom-ref": "simple-concat@1.0.1",
       "author": "Feross Aboukhadijeh",
       "description": "Super-minimalist version of `concat-stream`. Less than 15 lines!",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7450,6 +8045,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/simple-concat"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7460,6 +8059,7 @@
       "bom-ref": "tar-fs@2.1.5",
       "author": "Mathias Buus",
       "description": "filesystem bindings for tar-stream",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7501,6 +8101,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/tar-fs"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ],
       "components": [
@@ -7511,6 +8115,7 @@
           "bom-ref": "tar-fs@2.1.5|chownr@1.1.4",
           "author": "Isaac Z. Schlueter",
           "description": "like `chown -R`",
+          "scope": "optional",
           "licenses": [
             {
               "license": {
@@ -7552,6 +8157,10 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/tar-fs/node_modules/chownr"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
             }
           ]
         }
@@ -7564,6 +8173,7 @@
       "bom-ref": "tar-stream@2.2.0",
       "author": "Mathias Buus",
       "description": "tar-stream is a streaming tar parser and generator and nothing else. It is streams2 and operates purely using streams which means you can easily extract/parse tarballs without ever hitting the file system.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7605,6 +8215,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/tar-stream"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7614,6 +8228,7 @@
       "version": "4.1.0",
       "bom-ref": "bl@4.1.0",
       "description": "Buffer List: collect buffers and access with a standard readable Buffer interface, streamable too!",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7655,6 +8270,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/bl"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7665,6 +8284,7 @@
       "bom-ref": "buffer@5.7.1",
       "author": "Feross Aboukhadijeh",
       "description": "Node.js Buffer API, for the browser",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7706,6 +8326,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/buffer"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7716,6 +8340,7 @@
       "bom-ref": "base64-js@1.5.1",
       "author": "T. Jameson Little",
       "description": "Base64 encoding/decoding in pure JS",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7757,6 +8382,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/base64-js"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7767,6 +8396,7 @@
       "bom-ref": "ieee754@1.2.1",
       "author": "Feross Aboukhadijeh",
       "description": "Read/write IEEE754 floating point numbers from/to a Buffer or array-like object",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7808,6 +8438,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ieee754"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7817,6 +8451,7 @@
       "version": "2.0.4",
       "bom-ref": "inherits@2.0.4",
       "description": "Browser-friendly inheritance fully compatible with standard node.js inherits()",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7858,6 +8493,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/inherits"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7867,6 +8506,7 @@
       "version": "3.6.2",
       "bom-ref": "readable-stream@3.6.2",
       "description": "Streams3, a user-land copy of the stream library from Node.js",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7908,6 +8548,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/readable-stream"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7918,6 +8562,7 @@
       "bom-ref": "fs-constants@1.0.0",
       "author": "Mathias Buus",
       "description": "Require constants across node and the browser",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -7959,6 +8604,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/fs-constants"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -7968,6 +8617,7 @@
       "version": "1.3.0",
       "bom-ref": "string_decoder@1.3.0",
       "description": "The string_decoder module from Node core",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -8009,6 +8659,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/string_decoder"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -8019,6 +8673,7 @@
       "bom-ref": "safe-buffer@5.2.1",
       "author": "Feross Aboukhadijeh",
       "description": "Safer Node.js Buffer API",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -8060,6 +8715,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/safe-buffer"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -8070,6 +8729,7 @@
       "bom-ref": "util-deprecate@1.0.2",
       "author": "Nathan Rajlich",
       "description": "The Node.js `util.deprecate()` function with browser support",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -8111,6 +8771,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/util-deprecate"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -8121,6 +8785,7 @@
       "bom-ref": "tunnel-agent@0.6.0",
       "author": "Mikeal Rogers",
       "description": "HTTP proxy tunneling agent. Formerly part of mikeal/request, now a standalone module.",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -8162,6 +8827,10 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/tunnel-agent"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
