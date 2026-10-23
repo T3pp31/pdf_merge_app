@@ -192,9 +192,15 @@ function renderFileList() {
 }
 
 function addFiles(fileListInput) {
-    const incoming = Array.from(fileListInput).filter((f) => f.type === 'application/pdf');
+    const allFiles = Array.from(fileListInput);
+    const incoming = allFiles.filter((f) => f.type === 'application/pdf');
 
-    if (incoming.length !== fileListInput.length) {
+    if (allFiles.length === 0) {
+        renderFileList();
+        return;
+    }
+
+    if (incoming.length !== allFiles.length) {
         updateStatus('status.nonPdfExcluded', {}, 'error');
     }
 
@@ -203,7 +209,7 @@ function addFiles(fileListInput) {
     if (selectedFiles.length > MAX_FILES) {
         updateStatus('status.maxExceeded', {}, 'error');
         selectedFiles = selectedFiles.slice(0, MAX_FILES);
-    } else if (selectedFiles.length > 0 && incoming.length === fileListInput.length) {
+    } else if (incoming.length > 0 && incoming.length === allFiles.length) {
         updateStatus('status.filesSelected', { count: selectedFiles.length });
     }
 
@@ -269,7 +275,9 @@ function bindEvents() {
     dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
         dropZone.classList.remove('dragover');
-        addFiles(e.dataTransfer.files);
+        const files = e.dataTransfer && e.dataTransfer.files;
+        if (!files || files.length === 0) return;
+        addFiles(files);
     });
 
     fileInput.addEventListener('change', (e) => {
