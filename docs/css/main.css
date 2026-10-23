@@ -22,6 +22,28 @@ body {
     box-shadow: var(--focus-ring);
 }
 
+/* Forced colors (Windows High Contrast): box-shadow is not painted, so
+   provide an outline-based focus indicator using system colors. */
+@media (forced-colors: active) {
+    :focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+
+    .lang-switch button:focus-visible,
+    .secondary-button:focus-visible,
+    .primary-button:focus-visible,
+    .icon-button:focus-visible,
+    .drag-handle:focus-visible,
+    .download-link:focus-visible,
+    .site-footer a:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+        box-shadow: none;
+    }
+}
+
 /* Header */
 .site-header {
     width: 100%;
