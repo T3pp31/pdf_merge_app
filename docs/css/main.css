@@ -440,8 +440,27 @@ body {
     color: var(--color-error);
 }
 
+.status-message.error::before {
+    content: "\26A0\FE0E";
+    margin-right: var(--space-xs);
+}
+
 .status-message.success {
     color: var(--color-success);
+}
+
+.status-message.success::before {
+    content: "\2714\FE0E";
+    margin-right: var(--space-xs);
+}
+
+@media (forced-colors: active) {
+    .status-message.error,
+    .status-message.success {
+        border-left: 4px solid CanvasText;
+        border-left-style: solid;
+        padding-left: var(--space-sm);
+    }
 }
 
 .progress-container {
